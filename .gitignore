@@ -1,0 +1,9 @@
+.metadata/
+.settings/
+.project
+.classpath
+build/
+bin/
+out/
+.idea/
+*.iml

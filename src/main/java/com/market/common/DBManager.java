@@ -1,5 +1,6 @@
 package com.market.common;
 
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,4 +22,8 @@ public class DBManager {
 	public static Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(URL, USER, PASSWORD);
 	}
+=======
+public class DBManager {
+
+>>>>>>> c7b7f19884895851cc23093f1f1471d7a079cc1e
 }

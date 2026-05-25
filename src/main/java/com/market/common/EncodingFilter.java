@@ -1,6 +1,5 @@
 package com.market.common;
 
-<<<<<<< HEAD
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -10,15 +9,10 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 
 import java.io.IOException;
-=======
-import javax.servlet.Filter;
-import javax.servlet.annotation.WebFilter;
->>>>>>> c7b7f19884895851cc23093f1f1471d7a079cc1e
 
 @WebFilter("/*")
 public class EncodingFilter implements Filter {
 
-<<<<<<< HEAD
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
@@ -32,6 +26,4 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void destroy() {}
-=======
->>>>>>> c7b7f19884895851cc23093f1f1471d7a079cc1e
 }

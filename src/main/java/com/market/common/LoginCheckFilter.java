@@ -1,6 +1,5 @@
 package com.market.common;
 
-<<<<<<< HEAD
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -13,15 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-=======
-import javax.servlet.Filter;
-import javax.servlet.annotation.WebFilter;
->>>>>>> c7b7f19884895851cc23093f1f1471d7a079cc1e
 
 @WebFilter(urlPatterns = {"/product/form", "/product/write", "/user/profile"})
 public class LoginCheckFilter implements Filter {
 
-<<<<<<< HEAD
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
@@ -43,6 +37,4 @@ public class LoginCheckFilter implements Filter {
 
     @Override
     public void destroy() {}
-=======
->>>>>>> c7b7f19884895851cc23093f1f1471d7a079cc1e
 }

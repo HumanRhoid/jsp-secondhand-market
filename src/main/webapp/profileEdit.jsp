@@ -242,11 +242,7 @@
     </div>
 
     <!-- 저장 -->
-<<<<<<< HEAD
     <button class="save-btn" type="button" onclick="location.href='profile.jsp'">저장</button>
-=======
-    <button class="save-btn" type="button" onclick="location.href='profile-view.html'">저장</button>
->>>>>>> c7b7f19884895851cc23093f1f1471d7a079cc1e
 
   </div>
 </body>

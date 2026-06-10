@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import com.market.common.RedisManager;
+import com.market.global.config.RedisManager;
 import com.market.user.UserDAO;
 import com.market.user.UserDTO;
 

@@ -14,6 +14,9 @@ out/
 # Maven 빌드 결과물
 target/
 
+# DB/Redis 접속 정보 (db.properties.example 참고)
+src/main/resources/db.properties
+
 # OS
 Thumbs.db
 .DS_Store

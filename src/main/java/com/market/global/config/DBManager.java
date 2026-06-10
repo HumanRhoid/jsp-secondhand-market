@@ -1,14 +1,10 @@
-package com.market.common;
+package com.market.global.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBManager {
-
-    private static final String URL      = "jdbc:postgresql://localhost:5432/SecondheadServiceDB";
-    private static final String USER     = "postgres";
-    private static final String PASSWORD = "990909";
 
     static {
         try {
@@ -19,6 +15,9 @@ public class DBManager {
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        return DriverManager.getConnection(
+                AppConfig.get("db.url"),
+                AppConfig.get("db.user"),
+                AppConfig.get("db.password"));
     }
 }

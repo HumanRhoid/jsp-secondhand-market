@@ -1,7 +1,10 @@
-package com.market.common;
+package com.market.global.config;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -15,8 +18,8 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class RedisManager {
 
-    private static final String HOST = "localhost";
-    private static final int    PORT = 6379;
+    private static final Logger log = LoggerFactory.getLogger(RedisManager.class);
+
     private static final String RANK_KEY = "product:rank";
 
     private static JedisPool pool;
@@ -28,7 +31,7 @@ public class RedisManager {
             JedisPoolConfig config = new JedisPoolConfig();
             config.setMaxTotal(20);
             config.setMaxIdle(5);
-            pool = new JedisPool(config, HOST, PORT, 2000);
+            pool = new JedisPool(config, AppConfig.get("redis.host"), AppConfig.getInt("redis.port"), 2000);
         }
         return pool;
     }
@@ -47,7 +50,7 @@ public class RedisManager {
         try (Jedis jedis = getPool().getResource()) {
             jedis.zincrby(RANK_KEY, 1, String.valueOf(productId));
         } catch (Exception e) {
-            System.out.println("Redis incrementProductRank 실패(폴백): " + e.getMessage());
+            log.warn("Redis incrementProductRank 실패(폴백): {}", e.getMessage());
             markDown();
         }
     }
@@ -60,7 +63,7 @@ public class RedisManager {
             for (String member : jedis.zrevrange(RANK_KEY, 0, count - 1))
                 ids.add(Long.parseLong(member));
         } catch (Exception e) {
-            System.out.println("Redis getTopProductIds 실패(폴백): " + e.getMessage());
+            log.warn("Redis getTopProductIds 실패(폴백): {}", e.getMessage());
             markDown();
         }
         return ids;
@@ -72,7 +75,7 @@ public class RedisManager {
         try (Jedis jedis = getPool().getResource()) {
             jedis.zrem(RANK_KEY, String.valueOf(productId));
         } catch (Exception e) {
-            System.out.println("Redis removeProductRank 실패(폴백): " + e.getMessage());
+            log.warn("Redis removeProductRank 실패(폴백): {}", e.getMessage());
             markDown();
         }
     }

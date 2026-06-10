@@ -1,6 +1,6 @@
 package com.market.product;
 
-import com.market.common.DBManager;
+import com.market.global.config.DBManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

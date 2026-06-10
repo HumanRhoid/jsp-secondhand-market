@@ -55,6 +55,27 @@
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
 			<version>3.0.1</version>
 		</dependency>
+
+		<!-- BCrypt 비밀번호 해싱 -->
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
+		</dependency>
+
+		<!-- SLF4J + Logback 로깅 -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.5.18</version>
+		</dependency>
+
+		<!-- Gson (JSON 직렬화) -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.11.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

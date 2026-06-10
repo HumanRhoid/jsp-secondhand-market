@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>${product.title} - 상품 상세</title>
+<title><c:out value="${product.title}"/> - 상품 상세</title>
 <style>
   /*
     ───────────────────────────────────────────────
@@ -202,17 +202,17 @@
 
     <!-- 상품 사진 -->
     <div class="product-image">
-      <img src="${empty product.thumbnail ? 'https://picsum.photos/seed/'.concat(product.id).concat('/780/640') : product.thumbnail}" alt="${product.title}">
+      <img src="<c:out value="${empty product.thumbnail ? 'https://picsum.photos/seed/'.concat(product.id).concat('/780/640') : product.thumbnail}"/>" alt="<c:out value="${product.title}"/>">
     </div>
 
     <!-- 상품 정보 -->
     <div class="content">
-      <div class="seller">${seller.nickname} · ${seller.region} · 매너온도 ${seller.mannerTemp}℃</div>
-      <h1 class="title">${product.title}</h1>
+      <div class="seller"><c:out value="${seller.nickname}"/> · <c:out value="${seller.region}"/> · 매너온도 ${seller.mannerTemp}℃</div>
+      <h1 class="title"><c:out value="${product.title}"/></h1>
       <div class="price"><fmt:formatNumber value="${product.price}" />원</div>
-      <div class="shipping">${product.status} · 조회 ${product.viewCount} · 관심 ${product.likeCount}</div>
+      <div class="shipping"><c:out value="${product.status}"/> · 조회 ${product.viewCount} · 관심 ${product.likeCount}</div>
       <div class="divider"></div>
-      <p class="description">${product.description}</p>
+      <p class="description"><c:out value="${product.description}"/></p>
 
       <%-- 본인 매물일 때만 관리 메뉴 노출 --%>
       <c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.id == product.userId}">

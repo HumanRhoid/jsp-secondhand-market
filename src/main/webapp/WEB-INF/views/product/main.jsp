@@ -199,7 +199,7 @@
         <div class="popular-row">
           <c:forEach var="p" items="${popular}">
             <a class="popular-card" href="${pageContext.request.contextPath}/product/detail?id=${p.id}">
-              <div class="p-title">${p.title}</div>
+              <div class="p-title"><c:out value="${p.title}"/></div>
               <div class="p-price"><fmt:formatNumber value="${p.price}" />원</div>
             </a>
           </c:forEach>
@@ -215,14 +215,14 @@
       <c:forEach var="p" items="${products}">
         <a class="card" href="${pageContext.request.contextPath}/product/detail?id=${p.id}">
           <div class="card-image">
-            <img src="${empty p.thumbnail ? 'https://picsum.photos/seed/'.concat(p.id).concat('/326/326') : p.thumbnail}" alt="${p.title}">
+            <img src="<c:out value="${empty p.thumbnail ? 'https://picsum.photos/seed/'.concat(p.id).concat('/326/326') : p.thumbnail}"/>" alt="<c:out value="${p.title}"/>">
           </div>
           <div class="card-text">
-            <div class="card-title">${p.title}</div>
+            <div class="card-title"><c:out value="${p.title}"/></div>
             <div class="card-price"><fmt:formatNumber value="${p.price}" />원</div>
-            <div class="card-desc">${p.description}</div>
+            <div class="card-desc"><c:out value="${p.description}"/></div>
             <c:if test="${p.status ne '판매중'}">
-              <div class="card-status">${p.status}</div>
+              <div class="card-status"><c:out value="${p.status}"/></div>
             </c:if>
           </div>
         </a>

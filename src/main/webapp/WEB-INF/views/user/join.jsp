@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -164,10 +165,10 @@
     </header>
 
     <!-- form -->
-    <%-- 가입 실패 메시지 (UserController에서 전달) --%>
-    <% if (request.getAttribute("errorMessage") != null) { %>
-      <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><%= request.getAttribute("errorMessage") %></div>
-    <% } %>
+    <%-- 가입 실패 메시지 (UserController에서 전달, c:out으로 XSS 방지) --%>
+    <c:if test="${not empty errorMessage}">
+      <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><c:out value="${errorMessage}"/></div>
+    </c:if>
 
     <form class="form" method="post"
           action="<%= request.getContextPath() %>/user/join"
@@ -263,7 +264,7 @@
       if (f.nickname.value.trim() === "") { alert("이름을 입력하세요."); f.nickname.focus(); return false; }
       if (f.email.value.trim() === "") { alert("이메일을 입력하세요."); f.email.focus(); return false; }
       if (f.region.value === "") { alert("지역을 선택하세요."); f.region.focus(); return false; }
-      if (f.password.value.length < 4) { alert("비밀번호는 4자 이상 입력하세요."); f.password.focus(); return false; }
+      if (f.password.value.length < 8 || f.password.value.length > 20) { alert("비밀번호는 8자 이상 20자 이하로 입력하세요."); f.password.focus(); return false; }
       if (f.password.value !== f.confirm.value) { alert("비밀번호가 일치하지 않습니다."); f.confirm.focus(); return false; }
       return true;
     }

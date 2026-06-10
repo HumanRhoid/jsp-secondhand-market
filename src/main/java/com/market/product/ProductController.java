@@ -8,7 +8,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import com.market.user.UserDTO;
+import com.market.global.exception.CustomException;
+import com.market.global.exception.GlobalErrorCode;
+import com.market.user.SessionUser;
 import com.market.user.UserService;
 
 /**
@@ -64,19 +66,28 @@ public class ProductController extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/views/product/detail.jsp").forward(req, resp);
     }
 
-    private void write(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UserDTO loginUser = (UserDTO) req.getSession().getAttribute("loginUser");
+    private void write(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        SessionUser loginUser = (SessionUser) req.getSession().getAttribute("loginUser");
         ProductDTO product = new ProductDTO();
         product.setTitle(req.getParameter("title"));
         product.setDescription(req.getParameter("description"));
         product.setPrice((int) parseLong(req.getParameter("price")));
         product.setThumbnail(req.getParameter("thumbnail"));
-        productService.write(loginUser.getId(), product);
+        try {
+            productService.write(loginUser.getId(), product);
+        } catch (CustomException e) {
+            if (e.getErrorCode() != GlobalErrorCode.INVALID_INPUT) throw e;
+            // 검증 실패 → 등록 폼으로 되돌림
+            req.setAttribute("errorMessage", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/product/form.jsp").forward(req, resp);
+            return;
+        }
         resp.sendRedirect(req.getContextPath() + "/product/");
     }
 
     private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UserDTO loginUser = (UserDTO) req.getSession().getAttribute("loginUser");
+        SessionUser loginUser = (SessionUser) req.getSession().getAttribute("loginUser");
         long id = parseLong(req.getParameter("id"));
         productService.update(
                 loginUser.getId(),
@@ -90,7 +101,7 @@ public class ProductController extends HttpServlet {
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UserDTO loginUser = (UserDTO) req.getSession().getAttribute("loginUser");
+        SessionUser loginUser = (SessionUser) req.getSession().getAttribute("loginUser");
         productService.delete(loginUser.getId(), parseLong(req.getParameter("id")));
         resp.sendRedirect(req.getContextPath() + "/product/");
     }

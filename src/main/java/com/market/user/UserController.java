@@ -73,7 +73,7 @@ public class UserController extends HttpServlet {
     private void login(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-            UserDTO user = userService.login(req.getParameter("email"), req.getParameter("password"));
+            SessionUser user = userService.login(req.getParameter("email"), req.getParameter("password"));
             HttpSession session = req.getSession();
             session.setAttribute("loginUser", user);
             resp.sendRedirect(req.getContextPath() + "/product/");
@@ -84,8 +84,8 @@ public class UserController extends HttpServlet {
     }
 
     private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UserDTO loginUser = (UserDTO) req.getSession().getAttribute("loginUser"); // LoginCheckFilter가 보호
-        UserDTO updated = userService.updateProfile(
+        SessionUser loginUser = (SessionUser) req.getSession().getAttribute("loginUser"); // LoginCheckFilter가 보호
+        SessionUser updated = userService.updateProfile(
                 loginUser.getId(),
                 req.getParameter("nickname"),
                 req.getParameter("region"),

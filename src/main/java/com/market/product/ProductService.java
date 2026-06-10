@@ -11,6 +11,7 @@ import com.market.global.config.RedisManager;
 import com.market.global.exception.CustomException;
 import com.market.global.exception.GlobalErrorCode;
 import com.market.global.exception.ProductErrorCode;
+import com.market.global.util.ValidationUtil;
 
 /**
  * 상품 비즈니스 로직. 소유자 검증/조회수·랭킹 연동은 여기서 처리하고 SQL은 ProductDAO에 위임한다.
@@ -60,8 +61,10 @@ public class ProductService {
         }
     }
 
-    /** 상품 등록 */
+    /** 상품 등록. 검증 실패 시 G001 */
     public void write(long userId, ProductDTO product) {
+        ValidationUtil.validateRequired(product.getTitle(), "title");
+        ValidationUtil.validatePositive(product.getPrice(), "price");
         try {
             product.setUserId(userId);
             productDAO.insert(product);
@@ -74,6 +77,8 @@ public class ProductService {
     /** 상품 수정. 소유자가 아니면 P002 */
     public void update(long loginUserId, long productId, String title, String description,
                        int price, String status, String thumbnail) {
+        ValidationUtil.validateRequired(title, "title");
+        ValidationUtil.validatePositive(price, "price");
         try {
             ProductDTO product = verifyOwner(loginUserId, productId);
             product.setTitle(title);

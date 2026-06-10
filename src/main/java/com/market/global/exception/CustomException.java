@@ -18,6 +18,12 @@ public class CustomException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
+    /** 에러코드는 유지하되 메시지만 구체화할 때 사용 (예: 검증 실패 필드 안내) */
+    public CustomException(BaseErrorCode errorCode, String message) {
+        super(message);
+        this.errorCode = errorCode;
+    }
+
     public BaseErrorCode getErrorCode() {
         return errorCode;
     }

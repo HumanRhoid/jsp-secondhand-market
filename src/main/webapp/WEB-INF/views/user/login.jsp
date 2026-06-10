@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -163,10 +164,10 @@
       <h1 class="headline">안녕하세요,<br>로그인하세요</h1>
     </header>
 
-    <%-- 로그인 실패 메시지 (UserController에서 전달) --%>
-    <% if (request.getAttribute("errorMessage") != null) { %>
-      <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><%= request.getAttribute("errorMessage") %></div>
-    <% } %>
+    <%-- 로그인 실패 메시지 (UserController에서 전달, c:out으로 XSS 방지) --%>
+    <c:if test="${not empty errorMessage}">
+      <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><c:out value="${errorMessage}"/></div>
+    </c:if>
 
     <!-- form -->
     <form class="form" method="post" action="<%= request.getContextPath() %>/user/login">

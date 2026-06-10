@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+	<!--
+	  @WebFilter는 실행 순서를 보장하지 않으므로 필터는 web.xml에 등록한다.
+	  순서: Encoding → Logging → ExceptionHandling → LoginCheck
+	  (Servlet은 @WebServlet 어노테이션 유지)
+	-->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>com.market.global.filter.EncodingFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>loggingFilter</filter-name>
+		<filter-class>com.market.global.filter.LoggingFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>exceptionHandlingFilter</filter-name>
+		<filter-class>com.market.global.filter.ExceptionHandlingFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>loginCheckFilter</filter-name>
+		<filter-class>com.market.global.filter.LoginCheckFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>loggingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>exceptionHandlingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>loginCheckFilter</filter-name>
+		<url-pattern>/product/form</url-pattern>
+		<url-pattern>/product/write</url-pattern>
+		<url-pattern>/product/update</url-pattern>
+		<url-pattern>/product/delete</url-pattern>
+		<url-pattern>/user/profile</url-pattern>
+		<url-pattern>/user/update</url-pattern>
+		<url-pattern>/user/edit</url-pattern>
+	</filter-mapping>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/error/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/error/500.jsp</location>
+	</error-page>
+
+</web-app>

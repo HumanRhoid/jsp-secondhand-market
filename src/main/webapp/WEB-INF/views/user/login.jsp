@@ -164,8 +164,8 @@
     </header>
 
     <%-- 로그인 실패 메시지 (UserController에서 전달) --%>
-    <% if (request.getAttribute("error") != null) { %>
-      <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><%= request.getAttribute("error") %></div>
+    <% if (request.getAttribute("errorMessage") != null) { %>
+      <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><%= request.getAttribute("errorMessage") %></div>
     <% } %>
 
     <!-- form -->
@@ -206,7 +206,7 @@
 
     <!-- footer -->
     <div class="footer-prompt">
-      계정이 없으신가요?<a class="link-inline" href="join.jsp">회원가입</a>
+      계정이 없으신가요?<a class="link-inline" href="<%= request.getContextPath() %>/user/join">회원가입</a>
     </div>
 
   </div>

@@ -242,7 +242,7 @@
     </div>
 
     <!-- 저장 -->
-    <button class="save-btn" type="button" onclick="location.href='profile.jsp'">저장</button>
+    <button class="save-btn" type="button" onclick="location.href='<%= request.getContextPath() %>/user/profile'">저장</button>
 
   </div>
 </body>

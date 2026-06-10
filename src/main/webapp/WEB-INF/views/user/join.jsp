@@ -165,8 +165,8 @@
 
     <!-- form -->
     <%-- 가입 실패 메시지 (UserController에서 전달) --%>
-    <% if (request.getAttribute("error") != null) { %>
-      <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><%= request.getAttribute("error") %></div>
+    <% if (request.getAttribute("errorMessage") != null) { %>
+      <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><%= request.getAttribute("errorMessage") %></div>
     <% } %>
 
     <form class="form" method="post"
@@ -252,7 +252,7 @@
 
     <!-- footer -->
     <div class="footer-prompt">
-      이미 계정이 있으신가요?<a class="link-inline" href="login.jsp">로그인</a>
+      이미 계정이 있으신가요?<a class="link-inline" href="<%= request.getContextPath() %>/user/login">로그인</a>
     </div>
 
   </div>

@@ -22,18 +22,29 @@ public class UserDAO {
         }
     }
 
-    // 로그인 (email + password 일치 여부)
-    public UserDTO login(String email, String password) throws SQLException {
-        String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+    // email로 회원 조회 (비밀번호 비교는 Service에서 수행)
+    public UserDTO findByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM users WHERE email = ?";
         try (Connection con = DBManager.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, email);
-            ps.setString(2, password);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) return toDTO(rs);
             }
         }
         return null;
+    }
+
+    // 이메일 중복 여부
+    public boolean existsByEmail(String email) throws SQLException {
+        String sql = "SELECT 1 FROM users WHERE email = ?";
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
     }
 
     // id로 회원 조회

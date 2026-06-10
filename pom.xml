@@ -63,7 +63,14 @@
 			<version>0.4</version>
 		</dependency>
 
-		<!-- SLF4J + Logback 로깅 -->
+		<!-- SLF4J + Logback 로깅
+		     slf4j-api를 명시하지 않으면 jedis의 전이 의존성(slf4j-api 1.7.x)이 선택되어
+		     logback 1.5(SLF4J 2.x 필요)가 NOP로 폴백됨 → 로그가 전혀 출력되지 않음 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.0.17</version>
+		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>

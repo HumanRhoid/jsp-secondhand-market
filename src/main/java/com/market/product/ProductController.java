@@ -68,7 +68,11 @@ public class ProductController extends HttpServlet {
 
     private void write(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        SessionUser loginUser = (SessionUser) req.getSession().getAttribute("loginUser");
+        SessionUser loginUser = SessionUser.current(req);
+        if (loginUser == null) {
+            resp.sendRedirect(req.getContextPath() + "/user/login");
+            return;
+        }
         ProductDTO product = new ProductDTO();
         product.setTitle(req.getParameter("title"));
         product.setDescription(req.getParameter("description"));
@@ -87,21 +91,28 @@ public class ProductController extends HttpServlet {
     }
 
     private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        SessionUser loginUser = (SessionUser) req.getSession().getAttribute("loginUser");
-        long id = parseLong(req.getParameter("id"));
-        productService.update(
-                loginUser.getId(),
-                id,
-                req.getParameter("title"),
-                req.getParameter("description"),
-                (int) parseLong(req.getParameter("price")),
-                req.getParameter("status"),
-                req.getParameter("thumbnail"));
-        resp.sendRedirect(req.getContextPath() + "/product/detail?id=" + id);
+        SessionUser loginUser = SessionUser.current(req);
+        if (loginUser == null) {
+            resp.sendRedirect(req.getContextPath() + "/user/login");
+            return;
+        }
+        ProductDTO form = new ProductDTO();
+        form.setId(parseLong(req.getParameter("id")));
+        form.setTitle(req.getParameter("title"));
+        form.setDescription(req.getParameter("description"));
+        form.setPrice((int) parseLong(req.getParameter("price")));
+        form.setStatus(req.getParameter("status"));
+        form.setThumbnail(req.getParameter("thumbnail"));
+        productService.update(loginUser.getId(), form);
+        resp.sendRedirect(req.getContextPath() + "/product/detail?id=" + form.getId());
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        SessionUser loginUser = (SessionUser) req.getSession().getAttribute("loginUser");
+        SessionUser loginUser = SessionUser.current(req);
+        if (loginUser == null) {
+            resp.sendRedirect(req.getContextPath() + "/user/login");
+            return;
+        }
         productService.delete(loginUser.getId(), parseLong(req.getParameter("id")));
         resp.sendRedirect(req.getContextPath() + "/product/");
     }

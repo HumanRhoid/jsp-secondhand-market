@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -184,6 +185,14 @@
   }
   .textarea::placeholder { color: #a3a3a3; }
 
+  /* 검증 실패 메시지 */
+  .error-msg {
+    color: #e03131;
+    font-size: 14px;
+    line-height: 20px;
+    padding-left: 8px;
+  }
+
   /* 하단 액션바 */
   .action-bar {
     position: absolute;
@@ -217,7 +226,8 @@
 
     <!-- 상단바 -->
     <div class="topbar">
-      <button class="icon-btn" type="button" aria-label="뒤로">
+      <button class="icon-btn" type="button" aria-label="뒤로"
+              onclick="location.href='${pageContext.request.contextPath}/product/'">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
@@ -236,34 +246,41 @@
     </div>
 
     <!-- 폼 -->
-    <div class="form">
+    <form method="post" action="${pageContext.request.contextPath}/product/write">
+      <div class="form">
 
-      <div class="field">
-        <label class="label">제목</label>
-        <div class="input-wrap">
-          <input class="input" type="text" placeholder="상품명을 입력하세요">
+        <%-- 검증 실패 메시지 (ProductController에서 전달, c:out으로 XSS 방지) --%>
+        <c:if test="${not empty errorMessage}">
+          <div class="error-msg"><c:out value="${errorMessage}"/></div>
+        </c:if>
+
+        <div class="field">
+          <label class="label" for="title">제목</label>
+          <div class="input-wrap">
+            <input class="input" type="text" id="title" name="title" placeholder="상품명을 입력하세요" required>
+          </div>
         </div>
-      </div>
 
-      <div class="field">
-        <label class="label">가격</label>
-        <div class="input-wrap">
-          <input class="input has-suffix" type="text" inputmode="numeric" placeholder="0">
-          <span class="input-suffix">원</span>
+        <div class="field">
+          <label class="label" for="price">가격</label>
+          <div class="input-wrap">
+            <input class="input has-suffix" type="number" id="price" name="price" inputmode="numeric" placeholder="0" min="1" required>
+            <span class="input-suffix">원</span>
+          </div>
         </div>
+
+        <div class="field">
+          <label class="label" for="description">설명</label>
+          <textarea class="textarea" id="description" name="description" placeholder="상품 상태, 사용 기간, 거래 가능 지역 등을 자유롭게 적어주세요"></textarea>
+        </div>
+
       </div>
 
-      <div class="field">
-        <label class="label">설명</label>
-        <textarea class="textarea" placeholder="상품 상태, 사용 기간, 거래 가능 지역 등을 자유롭게 적어주세요"></textarea>
+      <!-- 하단 등록 버튼 -->
+      <div class="action-bar">
+        <button class="submit-btn" type="submit">등록하기</button>
       </div>
-
-    </div>
-
-    <!-- 하단 등록 버튼 -->
-    <div class="action-bar">
-      <button class="submit-btn" type="button">등록하기</button>
-    </div>
+    </form>
 
   </div>
 </body>

@@ -74,20 +74,19 @@ public class ProductService {
         }
     }
 
-    /** 상품 수정. 소유자가 아니면 P002 */
-    public void update(long loginUserId, long productId, String title, String description,
-                       int price, String status, String thumbnail) {
-        ValidationUtil.validateRequired(title, "title");
-        ValidationUtil.validatePositive(price, "price");
+    /** 상품 수정. 소유자가 아니면 P002. form에는 id와 수정할 필드들이 담긴다. */
+    public void update(long loginUserId, ProductDTO form) {
+        ValidationUtil.validateRequired(form.getTitle(), "title");
+        ValidationUtil.validatePositive(form.getPrice(), "price");
         try {
-            ProductDTO product = verifyOwner(loginUserId, productId);
-            product.setTitle(title);
-            product.setDescription(description);
-            product.setPrice(price);
-            product.setStatus(status);
-            product.setThumbnail(thumbnail);
+            ProductDTO product = verifyOwner(loginUserId, form.getId());
+            product.setTitle(form.getTitle());
+            product.setDescription(form.getDescription());
+            product.setPrice(form.getPrice());
+            product.setStatus(form.getStatus());
+            product.setThumbnail(form.getThumbnail());
             productDAO.update(product);
-            log.info("상품 수정: productId={}, userId={}", productId, loginUserId);
+            log.info("상품 수정: productId={}, userId={}", form.getId(), loginUserId);
         } catch (SQLException e) {
             throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
         }

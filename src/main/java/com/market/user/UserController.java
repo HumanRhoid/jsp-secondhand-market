@@ -84,7 +84,11 @@ public class UserController extends HttpServlet {
     }
 
     private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        SessionUser loginUser = (SessionUser) req.getSession().getAttribute("loginUser"); // LoginCheckFilter가 보호
+        SessionUser loginUser = SessionUser.current(req);
+        if (loginUser == null) {
+            resp.sendRedirect(req.getContextPath() + "/user/login");
+            return;
+        }
         SessionUser updated = userService.updateProfile(
                 loginUser.getId(),
                 req.getParameter("nickname"),

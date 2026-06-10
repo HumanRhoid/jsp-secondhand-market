@@ -6,20 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>동네생활</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { background: #f0f0f0; font-family: ui-sans-serif, system-ui, "Malgun Gothic", sans-serif; }
-  .frame { width: 390px; min-height: 844px; background: #fff; position: relative; margin: 40px auto; padding-bottom: 40px; }
-  .topbar { height: 56px; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; padding: 0 16px; }
-  .icon-btn { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; color: #000; text-decoration: none; }
-  .icon-btn svg { width: 22px; height: 22px; }
-  .topbar-title { flex: 1; text-align: center; font-size: 16px; font-weight: 600; }
-  .post { display: block; padding: 16px 24px; border-bottom: 1px solid #f0f0f0; text-decoration: none; color: #000; }
+  .frame { padding-bottom: 40px; }
+  .post { display: block; padding: 16px 24px; border-bottom: 1px solid var(--hairline); text-decoration: none; color: var(--ink); }
   .post .t { font-size: 15px; font-weight: 500; }
-  .post .m { font-size: 12px; color: #a3a3a3; margin-top: 6px; }
-  .empty { text-align: center; color: #a3a3a3; padding: 80px 24px; font-size: 14px; }
-  .fab { position: fixed; left: 50%; transform: translateX(127px); bottom: 32px; width: 56px; height: 56px; border-radius: 9999px; background: #ff6f0f; color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,.25); text-decoration: none; }
-  .fab svg { width: 28px; height: 28px; }
+  .post .m { font-size: 12px; color: var(--mute); margin-top: 6px; }
 </style>
 </head>
 <body>

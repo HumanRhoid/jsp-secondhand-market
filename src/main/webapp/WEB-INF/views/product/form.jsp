@@ -7,300 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>상품 등록</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design.css">
 <style>
-/*
-    ───────────────────────────────────────────────
-    FIGMA-READY — 390 × 844 모바일 프레임
-    - 모든 치수 px 고정
-    - position: sticky 없음, 미디어 쿼리 없음
-    ───────────────────────────────────────────────
-  */
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-html, body {
-	background: #f0f0f0;
-	font-family: ui-sans-serif, system-ui, -apple-system,
-		"Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-	-webkit-font-smoothing: antialiased;
-}
-
-/* 모바일 프레임 — 필드(카테고리/거래위치) 추가로 내용에 맞춰 늘어나도록 변경 */
-.frame {
-	width: 390px;
-	min-height: 844px;
-	background: #ffffff;
-	position: relative;
-	margin: 40px auto;
-	padding-bottom: 110px; /* 하단 등록 버튼(action-bar)과 겹침 방지 */
-}
-
-/* 상단바 */
-.topbar {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 390px;
-	height: 56px;
-	background: #ffffff;
-	border-bottom: 1px solid #e5e5e5;
-	display: flex;
-	align-items: center;
-	padding: 0 16px;
-}
-
-.icon-btn {
-	width: 40px;
-	height: 40px;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	background: transparent;
-	border: 0;
-	border-radius: 9999px;
-	color: #000000;
-	padding: 0;
-	cursor: pointer;
-}
-
-.icon-btn svg {
-	width: 22px;
-	height: 22px;
-}
-
-.topbar-title {
-	position: absolute;
-	left: 0;
-	right: 0;
-	text-align: center;
-	font-size: 16px;
-	font-weight: 500;
-	line-height: 24px;
-	color: #000000;
-	pointer-events: none;
-}
-
-/* 사진 업로드 영역 (일반 흐름 — 프레임이 내용만큼 늘어남) */
-.photo-upload {
-	position: relative;
-	display: block;
-	margin: 80px auto 0; /* 상단바(56) + 24 여백 */
-	width: 342px;
-	height: 200px;
-	border-radius: 12px;
-	background: #fafafa;
-	border: 1px dashed #d4d4d4;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 12px;
-	cursor: pointer;
-}
-
-.photo-upload svg {
-	width: 32px;
-	height: 32px;
-	color: #737373;
-}
-
-.photo-upload .photo-label {
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 20px;
-	color: #525252;
-}
-
-.photo-upload .photo-hint {
-	font-size: 12px;
-	font-weight: 400;
-	line-height: 16px;
-	color: #a3a3a3;
-	margin-top: -4px;
-}
-
-.photo-upload .photo-placeholder {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 12px;
-	width: 100%;
-	text-align: center;
-}
-
-.photo-upload .photo-preview-grid {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 6px;
-	padding: 8px;
-	width: 100%;
-	height: 100%;
-	overflow-y: auto;
-	align-content: flex-start;
-}
-
-.photo-upload .photo-preview-grid img {
-	width: 60px;
-	height: 60px;
-	object-fit: cover;
-	border-radius: 8px;
-}
-
-.photo-upload .photo-preview-grid img:first-child {
-	outline: 2px solid #ff6f0f; /* 대표 사진 표시 */
-	outline-offset: -2px;
-}
-
-/* 폼 (일반 흐름) */
-.form {
-	margin: 24px auto 0;
-	width: 342px;
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-}
-
-.field {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-}
-
-.label {
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 20px;
-	color: #000000;
-	padding-left: 8px;
-}
-
-/* 단일 행 입력 (제목, 가격) */
-.input-wrap {
-	position: relative;
-}
-
-.input {
-	width: 100%;
-	height: 44px;
-	padding: 8px 16px;
-	border-radius: 9999px;
-	border: 1px solid #e5e5e5;
-	background: #ffffff;
-	color: #000000;
-	font-family: inherit;
-	font-size: 16px;
-	font-weight: 400;
-	line-height: 24px;
-	outline: none;
-}
-
-.input::placeholder {
-	color: #a3a3a3;
-}
-
-/* 드롭다운(카테고리) — .input과 동일 규격의 pill */
-.select {
-	width: 100%;
-	height: 44px;
-	padding: 8px 16px;
-	border-radius: 9999px;
-	border: 1px solid #e5e5e5;
-	background: #ffffff;
-	color: #000000;
-	font-family: inherit;
-	font-size: 16px;
-	outline: none;
-}
-
-/* 거래 위치 안내줄 */
-.loc-line {
-	font-size: 13px;
-	color: #a3a3a3;
-	padding-left: 8px;
-	line-height: 20px;
-}
-
-.input.has-suffix {
-	padding-right: 40px;
-}
-
-.input-suffix {
-	position: absolute;
-	top: 0;
-	right: 16px;
-	height: 44px;
-	display: flex;
-	align-items: center;
-	font-size: 16px;
-	font-weight: 500;
-	color: #525252;
-	pointer-events: none;
-}
-
-/* 멀티라인 textarea (설명) — pill 아니라 rounded.lg */
-.textarea {
-	width: 100%;
-	height: 140px;
-	padding: 12px 16px;
-	border-radius: 12px;
-	border: 1px solid #e5e5e5;
-	background: #ffffff;
-	color: #000000;
-	font-family: inherit;
-	font-size: 16px;
-	font-weight: 400;
-	line-height: 24px;
-	outline: none;
-	resize: none;
-}
-
-.textarea::placeholder {
-	color: #a3a3a3;
-}
-
-/* 검증 실패 메시지 */
-.error-msg {
-	color: #e03131;
-	font-size: 14px;
-	line-height: 20px;
-	padding-left: 8px;
-}
-
-/* 하단 액션바 */
-.action-bar {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 390px;
-	height: 80px;
-	background: #ffffff;
-	border-top: 1px solid #e5e5e5;
-	display: flex;
-	align-items: center;
-	padding: 0 24px;
-}
-
-.submit-btn {
-	width: 342px;
-	height: 48px;
-	border-radius: 9999px;
-	background: #000000;
-	color: #ffffff;
-	border: 0;
-	font-family: inherit;
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 14px;
-	cursor: pointer;
-}
+	.frame { padding-bottom: 110px; } /* 하단 등록 버튼(action-bar)과 겹침 방지 */
+	.photo-upload { margin: 24px auto 0; }
+	.form { margin: 24px auto 0; width: 342px; display: flex; flex-direction: column; gap: 16px; }
+	/* 거래 위치 안내줄 */
+	.loc-line { font-size: 13px; color: var(--mute); padding-left: 8px; line-height: 20px; }
+	.textarea { height: 140px; }
 </style>
 </head>
 <body>
@@ -315,7 +29,7 @@ html, body {
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
 			</button>
-			<div class="topbar-title">상품 등록</div>
+			<div class="topbar-title offset-back">상품 등록</div>
 		</div>
 
 		<!-- 폼 (사진 파일 전송을 위해 multipart 인코딩) -->
@@ -395,14 +109,14 @@ html, body {
 
 			<!-- 하단 등록 버튼 -->
 			<div class="action-bar">
-				<button class="submit-btn" type="submit">등록하기</button>
+				<button class="btn btn-primary btn-block" type="submit">등록하기</button>
 			</div>
 		</form>
 
 	</div>
 
 	<script>
-		// 파일 선택 시 여러 장 미리보기 (첫 장 = 대표 사진, 주황 테두리)
+		// 파일 선택 시 여러 장 미리보기 (첫 장 = 대표 사진, ink 테두리)
 		function previewPhotos(input) {
 			var files = input.files;
 			var grid = document.getElementById('photoPreview');

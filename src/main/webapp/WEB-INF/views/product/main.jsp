@@ -7,84 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>둘러보기</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design.css">
 <style>
   /*
-    ───────────────────────────────────────────────
-    FIGMA-READY — 390px 모바일 프레임 (동적 데이터 연동판)
+    둘러보기 — 디자인 시스템: 흰 캔버스 + 검정 pill + hairline
     - 카드 그리드는 DB(products) 데이터로 렌더링
     - 인기 매물 스트립은 Redis 랭킹 TOP 4 (Redis 미동작 시 자동 미표시)
-    ───────────────────────────────────────────────
   */
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html, body {
-    background: #f0f0f0;
-    font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* 모바일 프레임 (내용 길이에 맞춰 늘어나도록 변경) */
-  .frame {
-    width: 390px;
-    min-height: 1140px;
-    background: #ffffff;
-    position: relative;
-    margin: 40px auto;
-    padding-bottom: 40px;
-  }
-
-  /* 상단 검색바 */
-  .topbar {
-    width: 390px;
-    height: 56px;
-    background: #ffffff;
-    border-bottom: 1px solid #e5e5e5;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 16px;
-  }
-  .topbar-action {
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    color: #525252;
-    text-decoration: none;
-  }
-  .topbar-action svg { width: 20px; height: 20px; }
-  .search-pill {
-    flex: 1;
-    height: 36px;
-    background: #fafafa;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    gap: 8px;
-  }
-  .search-pill svg {
-    width: 16px;
-    height: 16px;
-    color: #737373;
-    flex-shrink: 0;
-  }
-  .search-pill .search-input {
-    flex: 1;
-    min-width: 0;
-    border: 0;
-    outline: none;
-    background: transparent;
-    font-family: inherit;
-    font-size: 14px;
-    line-height: 20px;
-    color: #000;
-  }
-  .search-pill .search-input::placeholder { color: #a3a3a3; }
+  .frame { min-height: 1140px; padding-bottom: 40px; }
 
   /* 카테고리 칩 (가로 스크롤, 스크롤바 숨김) */
   .cat-row {
@@ -96,49 +26,27 @@
     scrollbar-width: none;       /* Firefox */
   }
   .cat-row::-webkit-scrollbar { display: none; } /* Chrome/Safari */
-  .cat-chip {
-    flex-shrink: 0;
-    height: 32px;
-    display: inline-flex;
-    align-items: center;
-    padding: 0 14px;
-    border-radius: 9999px;
-    border: 1px solid #e5e5e5;
-    background: #ffffff;
-    color: #525252;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .cat-chip.active { background: #ff6f0f; color: #ffffff; border-color: #ff6f0f; }
 
   /* 인기 매물 스트립 (Redis 랭킹) */
-  .popular {
-    width: 342px;
-    margin: 16px auto 0;
-  }
+  .popular { width: 342px; margin: 16px auto 0; }
   .popular-title {
+    font-family: var(--font-display);
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 22px;
-    color: #000000;
+    color: var(--ink);
     margin-bottom: 8px;
   }
-  .popular-row {
-    display: flex;
-    gap: 8px;
-  }
+  .popular-row { display: flex; gap: 8px; }
   .popular-card {
     flex: 1;
     min-width: 0;
-    background: #fff7f0;
-    border: 1px solid #ffd2b3;
-    border-radius: 10px;
+    background: var(--surface-soft);
+    border: 1px solid var(--hairline);
+    border-radius: var(--rounded-lg);
     padding: 8px;
     text-decoration: none;
-    color: #000000;
+    color: var(--ink);
   }
   .popular-card .p-title {
     font-size: 12px;
@@ -150,7 +58,7 @@
   .popular-card .p-price {
     font-size: 12px;
     font-weight: 700;
-    color: #ff6f0f;
+    color: var(--ink);
     margin-top: 2px;
   }
 
@@ -163,99 +71,28 @@
     column-gap: 16px;
     row-gap: 24px;
   }
-  .card {
-    width: 163px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    text-decoration: none;
-  }
+  .card { width: 163px; display: flex; flex-direction: column; gap: 12px; text-decoration: none; }
   .card-image {
     width: 163px;
     height: 163px;
-    border-radius: 12px;
-    background: #fafafa;
+    border-radius: var(--rounded-lg);
+    background: var(--surface-soft);
+    border: 1px solid var(--hairline);
     overflow: hidden;
   }
-  .card-image img {
-    width: 163px;
-    height: 163px;
-    object-fit: cover;
-    display: block;
-  }
-  .card-text {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 0 4px;
-  }
+  .card-image img { width: 163px; height: 163px; object-fit: cover; display: block; }
+  .card-text { display: flex; flex-direction: column; gap: 4px; padding: 0 4px; }
   .card-title {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 22px;
-    color: #000000;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 16px; font-weight: 500; line-height: 22px; color: var(--ink);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
-  .card-price {
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 20px;
-    color: #000000;
-  }
+  .card-price { font-size: 15px; font-weight: 700; line-height: 20px; color: var(--ink); }
   .card-desc {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    color: #737373;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 14px; font-weight: 400; line-height: 20px; color: var(--body);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   }
-  .card-status {
-    font-size: 12px;
-    color: #2e9e4f;
-  }
-  .empty {
-    width: 342px;
-    margin: 60px auto;
-    text-align: center;
-    color: #a3a3a3;
-    font-size: 14px;
-  }
-  .empty-cta {
-    display: inline-block;
-    margin-top: 16px;
-    padding: 10px 20px;
-    background: #ff6f0f;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 700;
-    border-radius: 9999px;
-    text-decoration: none;
-  }
-
-  /* 판매하기 플로팅 버튼 */
-  .fab {
-    position: fixed;
-    left: 50%;
-    transform: translateX(127px); /* 프레임(390px) 우하단에 고정 */
-    bottom: 32px;
-    width: 56px;
-    height: 56px;
-    border-radius: 9999px;
-    background: #ff6f0f;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    text-decoration: none;
-    z-index: 50;
-  }
-  .fab svg { width: 28px; height: 28px; }
+  .card-status { font-size: 12px; color: var(--charcoal); font-weight: 500; }
+  .empty-cta { margin-top: 16px; }
 </style>
 </head>
 <body>
@@ -311,11 +148,11 @@
     <!-- 카테고리 칩 (선택 시 GET /product/?category=, 검색어 유지) -->
     <c:if test="${not empty categories}">
       <div class="cat-row">
-        <a class="cat-chip ${empty selectedCategory ? 'active' : ''}"
+        <a class="chip ${empty selectedCategory ? 'active' : ''}"
            href="${pageContext.request.contextPath}/product/?${empty q ? '' : 'q='.concat(q)}">전체</a>
-        <a class="cat-chip ${nearby ? 'active' : ''}" href="#" onclick="goNearby(); return false;">📍 내 주변</a>
+        <a class="chip ${nearby ? 'active' : ''}" href="#" onclick="goNearby(); return false;">📍 내 주변</a>
         <c:forEach var="cat" items="${categories}">
-          <a class="cat-chip ${selectedCategory == cat.id ? 'active' : ''}"
+          <a class="chip ${selectedCategory == cat.id ? 'active' : ''}"
              href="${pageContext.request.contextPath}/product/?category=${cat.id}${empty q ? '' : '&q='.concat(q)}"><c:out value="${cat.name}"/></a>
         </c:forEach>
       </div>
@@ -324,7 +161,7 @@
     <!-- 인기 매물 (Redis 조회수 랭킹 TOP 4) -->
     <c:if test="${not empty popular}">
       <div class="popular">
-        <div class="popular-title">🔥 지금 인기</div>
+        <div class="popular-title">지금 인기</div>
         <div class="popular-row">
           <c:forEach var="p" items="${popular}">
             <a class="popular-card" href="${pageContext.request.contextPath}/product/detail?id=${p.id}">
@@ -340,7 +177,7 @@
     <c:if test="${empty products}">
       <div class="empty">
         아직 등록된 매물이 없어요.<br>첫 매물을 등록해 보세요!<br>
-        <a class="empty-cta" href="${pageContext.request.contextPath}/product/form">+ 매물 등록하기</a>
+        <a class="btn btn-primary btn-sm empty-cta" href="${pageContext.request.contextPath}/product/form">+ 매물 등록하기</a>
       </div>
     </c:if>
     <div class="grid">
@@ -354,7 +191,7 @@
             <div class="card-title"><c:out value="${p.title}"/></div>
             <div class="card-price"><fmt:formatNumber value="${p.price}" />원</div>
             <c:if test="${nearby && not empty p.distanceKm}">
-              <div class="card-status" style="color:#ff6f0f;">📍 <fmt:formatNumber value="${p.distanceKm}" maxFractionDigits="1"/>km</div>
+              <div class="card-status">📍 <fmt:formatNumber value="${p.distanceKm}" maxFractionDigits="1"/>km</div>
             </c:if>
             <div class="card-desc"><c:out value="${p.description}"/></div>
             <c:if test="${p.status ne '판매중'}">

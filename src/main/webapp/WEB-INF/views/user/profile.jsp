@@ -7,73 +7,21 @@
 <head>
 <meta charset="UTF-8">
 <title>내 프로필</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body {
-    background: #f0f0f0;
-    font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  .frame {
-    width: 390px;
-    min-height: 844px;
-    background: #ffffff;
-    position: relative;
-    margin: 40px auto;
-    padding-bottom: 40px;
-  }
-  .topbar {
-    width: 390px;
-    height: 56px;
-    border-bottom: 1px solid #e5e5e5;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-  }
-  .icon-btn {
-    width: 40px; height: 40px;
-    display: inline-flex; align-items: center; justify-content: center;
-    background: transparent; border: 0; border-radius: 9999px;
-    color: #000; cursor: pointer; text-decoration: none;
-  }
-  .icon-btn svg { width: 22px; height: 22px; }
-  .topbar-title {
-    flex: 1; text-align: center; font-size: 16px; font-weight: 600;
-    margin-right: 40px; /* 좌측 뒤로 버튼 폭 보정 */
-  }
-
+  .frame { padding-bottom: 40px; }
   .profile-head {
     display: flex; flex-direction: column; align-items: center;
     gap: 12px; padding: 32px 24px 24px;
   }
-  .avatar {
-    width: 96px; height: 96px; border-radius: 9999px;
-    object-fit: cover; background: #fafafa; border: 1px solid #e5e5e5;
-  }
-  .nickname { font-size: 20px; font-weight: 700; }
+  .nickname { font-family: var(--font-display); font-size: 20px; font-weight: 600; }
   .manner {
-    font-size: 13px; color: #ff6f0f; font-weight: 600;
-    background: #fff7f0; padding: 4px 12px; border-radius: 9999px;
+    font-size: 13px; color: var(--charcoal); font-weight: 500;
+    background: var(--surface-soft); border: 1px solid var(--hairline);
+    padding: 4px 12px; border-radius: var(--rounded-full);
   }
-
   .info { padding: 8px 24px; display: flex; flex-direction: column; gap: 4px; }
-  .info-row {
-    display: flex; justify-content: space-between;
-    padding: 14px 4px; border-bottom: 1px solid #f0f0f0;
-  }
-  .info-label { color: #737373; font-size: 14px; }
-  .info-value { color: #000; font-size: 14px; font-weight: 500; }
-
   .actions { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
-  .btn {
-    height: 48px; border-radius: 9999px; border: 0;
-    font-size: 15px; font-weight: 600; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    text-decoration: none;
-  }
-  .btn-primary { background: #ff6f0f; color: #fff; }
-  .btn-line { background: #fff; color: #000; border: 1px solid #e5e5e5; }
-  .btn-danger { background: #fff; color: #e03131; border: 1px solid #ffd0d0; }
 </style>
 </head>
 <body>
@@ -85,7 +33,7 @@
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </a>
-      <div class="topbar-title">내 프로필</div>
+      <div class="topbar-title offset-back">내 프로필</div>
     </div>
 
     <div class="profile-head">
@@ -108,11 +56,11 @@
 
     <div class="actions">
       <a class="btn btn-primary" href="${pageContext.request.contextPath}/user/edit">프로필 수정</a>
-      <a class="btn btn-line" href="${pageContext.request.contextPath}/product/">매물 둘러보기</a>
-      <a class="btn btn-danger" href="${pageContext.request.contextPath}/user/logout">로그아웃</a>
+      <a class="btn btn-secondary" href="${pageContext.request.contextPath}/product/">매물 둘러보기</a>
+      <a class="btn btn-secondary" href="${pageContext.request.contextPath}/user/logout">로그아웃</a>
       <form method="post" action="${pageContext.request.contextPath}/user/delete"
             onsubmit="return confirm('정말 탈퇴하시겠습니까? 등록한 매물도 함께 삭제됩니다.');">
-        <button type="submit" class="btn btn-line" style="width:100%; color:#a3a3a3;">회원 탈퇴</button>
+        <button type="submit" class="btn btn-quiet btn-block">회원 탈퇴</button>
       </form>
     </div>
 

@@ -7,23 +7,22 @@
 <head>
 <meta charset="UTF-8">
 <title>장바구니</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { background: #f0f0f0; font-family: ui-sans-serif, system-ui, "Malgun Gothic", sans-serif; }
-  .frame { width: 390px; min-height: 844px; background: #fff; position: relative; margin: 40px auto; padding-bottom: 100px; }
-  .topbar { height: 56px; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; padding: 0 16px; }
-  .icon-btn { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; color: #000; text-decoration: none; }
-  .icon-btn svg { width: 22px; height: 22px; }
-  .topbar-title { flex: 1; text-align: center; font-size: 16px; font-weight: 600; margin-right: 40px; }
-  .item { display: flex; gap: 12px; padding: 16px 24px; border-bottom: 1px solid #f0f0f0; align-items: center; }
-  .item img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; background: #fafafa; }
+  .frame { padding-bottom: 100px; }
+  .item { display: flex; gap: 12px; padding: 16px 24px; border-bottom: 1px solid var(--hairline); align-items: center; }
+  .item img { width: 64px; height: 64px; border-radius: var(--rounded-lg); object-fit: cover; background: var(--surface-soft); border: 1px solid var(--hairline); }
   .item .info { flex: 1; min-width: 0; }
   .item .t { font-size: 15px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .item .p { font-size: 15px; font-weight: 700; margin-top: 4px; }
-  .rm { border: 0; background: transparent; color: #a3a3a3; font-size: 13px; cursor: pointer; }
-  .empty { text-align: center; color: #a3a3a3; padding: 80px 24px; font-size: 14px; }
-  .summary { position: absolute; bottom: 0; left: 0; width: 390px; padding: 16px 24px; border-top: 1px solid #e5e5e5; background: #fff; display: flex; justify-content: space-between; align-items: center; }
-  .total { font-size: 16px; font-weight: 700; }
+  .rm { border: 0; background: transparent; color: var(--mute); font-size: 13px; cursor: pointer; font-family: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  .summary {
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    padding: 16px 24px; border-top: 1px solid var(--hairline); background: var(--canvas);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .summary .label-sum { font-size: 14px; color: var(--body); }
+  .total { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -32,7 +31,7 @@
       <a class="icon-btn" href="${pageContext.request.contextPath}/product/" aria-label="뒤로">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </a>
-      <div class="topbar-title">장바구니</div>
+      <div class="topbar-title offset-back">장바구니</div>
     </div>
 
     <c:choose>
@@ -57,7 +56,7 @@
           </div>
         </c:forEach>
         <div class="summary">
-          <span>합계</span>
+          <span class="label-sum">합계</span>
           <span class="total"><fmt:formatNumber value="${total}"/>원</span>
         </div>
       </c:otherwise>

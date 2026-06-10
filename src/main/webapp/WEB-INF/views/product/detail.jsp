@@ -7,99 +7,31 @@
 <head>
 <meta charset="UTF-8">
 <title><c:out value="${product.title}"/> - 상품 상세</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design.css">
 <style>
-  /*
-    ───────────────────────────────────────────────
-    FIGMA-READY — 390 × 844 모바일 프레임
-    - 모든 치수 px 고정
-    - position: sticky 없음, 미디어 쿼리 없음
-    ───────────────────────────────────────────────
-  */
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html, body {
-    background: #f0f0f0;
-    font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* 모바일 프레임 */
-  .frame {
-    width: 390px;
-    height: 844px;
-    background: #ffffff;
-    position: relative;
-    overflow: hidden;
-    margin: 40px auto;
-  }
-
-  /* 상단바 */
-  .topbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 390px;
-    height: 56px;
-    background: #ffffff;
-    border-bottom: 1px solid #e5e5e5;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    z-index: 2;
-  }
-  .icon-btn {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 0;
-    border-radius: 9999px;
-    color: #000000;
-    padding: 0;
-    cursor: pointer;
-  }
-  .icon-btn svg {
-    width: 22px;
-    height: 22px;
-  }
-  .topbar-right {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
+  .frame { height: 844px; }
+  .topbar { position: absolute; top: 0; left: 0; }
 
   /* 상품 사진 */
   .product-image {
     position: absolute;
     top: 56px;
     left: 0;
-    width: 390px;
+    width: 388px;        /* 프레임 hairline(1px×2) 보정 */
     height: 320px;
-    background: #fafafa;
+    background: var(--surface-soft);
     overflow: hidden;
   }
-  .product-image img {
-    width: 390px;
-    height: 320px;
-    object-fit: cover;
-    display: block;
-  }
+  .product-image img { width: 388px; height: 320px; object-fit: cover; display: block; }
   /* 여러 장: 좌우 스와이프 갤러리 */
   .product-image .gallery {
     display: flex;
-    width: 390px;
+    width: 388px;
     height: 320px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
   }
-  .product-image .gallery img {
-    flex: 0 0 390px;
-    scroll-snap-align: start;
-  }
+  .product-image .gallery img { flex: 0 0 388px; scroll-snap-align: start; }
 
   /* 정보 영역 */
   .content {
@@ -110,134 +42,17 @@
     display: flex;
     flex-direction: column;
   }
-  .seller {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    color: #737373;
-    margin-bottom: 4px;
-  }
-  .title {
-    font-family: "SF Pro Rounded", "SF Pro Display", system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 32px;
-    color: #000000;
-    margin-bottom: 12px;
-  }
-  .price {
-    font-family: "SF Pro Rounded", "SF Pro Display", system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 36px;
-    color: #000000;
-    margin-bottom: 20px;
-  }
-  .shipping {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    color: #525252;
-    margin-bottom: 24px;
-  }
-  .divider {
-    width: 342px;
-    height: 1px;
-    background: #e5e5e5;
-    margin-bottom: 24px;
-  }
-  .description {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: #525252;
-  }
+  .seller { font-size: 14px; font-weight: 400; line-height: 20px; color: var(--body); margin-bottom: 4px; }
+  .title { margin-bottom: 12px; }       /* heading-lg */
+  .price { margin-bottom: 20px; }       /* display-lg */
+  .meta-line { font-size: 14px; line-height: 20px; color: var(--charcoal); margin-bottom: 24px; }
+  .divider { margin-bottom: 24px; }
+  .description { font-size: 16px; font-weight: 400; line-height: 24px; color: var(--charcoal); }
 
-  /* 하단 액션바 */
-  .action-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 390px;
-    height: 80px;
-    background: #ffffff;
-    border-top: 1px solid #e5e5e5;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    gap: 12px;
-  }
-  .heart-btn {
-    width: 48px;
-    height: 48px;
-    flex-shrink: 0;
-    border-radius: 9999px;
-    border: 1px solid #d4d4d4;
-    background: #ffffff;
-    color: #000000;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    cursor: pointer;
-  }
-  .heart-btn svg {
-    width: 22px;
-    height: 22px;
-  }
-  /* 보조 버튼(장바구니): 주 버튼과 같은 높이/라운드, 테두리형 */
-  .cart-btn {
-    height: 48px;
-    padding: 0 20px;
-    border-radius: 9999px;
-    border: 1px solid #e5e5e5;
-    background: #ffffff;
-    color: #000000;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-  }
   /* 본인 매물 관리(수정/삭제) 버튼 */
-  .owner-actions {
-    margin-top: 20px;
-    display: flex;
-    gap: 8px;
-  }
-  .owner-btn {
-    flex: 1;
-    height: 40px;
-    border-radius: 9999px;
-    border: 1px solid #e5e5e5;
-    background: #ffffff;
-    color: #000000;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    cursor: pointer;
-    width: 100%;
-  }
-  .owner-btn.danger {
-    border-color: #ffd0d0;
-    color: #e03131;
-  }
-  .buy-btn {
-    flex: 1;
-    height: 48px;
-    border-radius: 9999px;
-    background: #000000;
-    color: #ffffff;
-    border: 0;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 14px;
-    cursor: pointer;
-  }
+  .owner-actions { margin-top: 20px; display: flex; gap: 8px; }
+  .owner-actions form { flex: 1; }
+  .owner-actions .btn { width: 100%; height: 40px; }
 </style>
 </head>
 <body>
@@ -273,32 +88,32 @@
     <!-- 상품 정보 -->
     <div class="content">
       <div class="seller"><c:out value="${seller.nickname}"/> · <c:out value="${seller.region}"/> · 매너온도 ${seller.mannerTemp}℃</div>
-      <h1 class="title"><c:out value="${product.title}"/></h1>
-      <div class="price"><fmt:formatNumber value="${product.price}" />원</div>
-      <div class="shipping"><c:out value="${product.status}"/> · 조회 ${product.viewCount} · 관심 ${product.likeCount}</div>
+      <h1 class="heading-lg title"><c:out value="${product.title}"/></h1>
+      <div class="display-lg price"><fmt:formatNumber value="${product.price}" />원</div>
+      <div class="meta-line"><c:out value="${product.status}"/> · 조회 ${product.viewCount} · 관심 ${product.likeCount}</div>
       <div class="divider"></div>
       <p class="description"><c:out value="${product.description}"/></p>
 
       <%-- 본인 매물일 때만 관리 메뉴 노출 --%>
       <c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.id == product.userId}">
         <div class="owner-actions">
-          <a class="owner-btn" href="${pageContext.request.contextPath}/product/edit?id=${product.id}">수정</a>
+          <a class="btn btn-secondary" style="flex:1;" href="${pageContext.request.contextPath}/product/edit?id=${product.id}">수정</a>
           <form method="post" action="${pageContext.request.contextPath}/product/delete"
-                onsubmit="return confirm('정말 삭제하시겠습니까?');" style="flex:1;">
+                onsubmit="return confirm('정말 삭제하시겠습니까?');">
             <input type="hidden" name="id" value="${product.id}">
-            <button type="submit" class="owner-btn danger">삭제</button>
+            <button type="submit" class="btn btn-quiet">삭제</button>
           </form>
         </div>
       </c:if>
     </div>
 
     <!-- 하단 액션바 -->
-    <div class="action-bar" style="gap:8px;">
+    <div class="action-bar">
       <form method="post" action="${pageContext.request.contextPath}/cart/add" style="flex:0 0 auto;">
         <input type="hidden" name="id" value="${product.id}">
-        <button type="submit" class="cart-btn">장바구니</button>
+        <button type="submit" class="btn btn-secondary">장바구니</button>
       </form>
-      <button class="buy-btn" type="button" onclick="requestPay()">구매하기</button>
+      <button class="btn btn-primary" style="flex:1;" type="button" onclick="requestPay()">구매하기</button>
     </div>
 
   <%-- 토스페이먼츠 결제 (테스트 키 — 실결제 없음). 성공 시 /order/success에서 서버 승인(confirm) --%>

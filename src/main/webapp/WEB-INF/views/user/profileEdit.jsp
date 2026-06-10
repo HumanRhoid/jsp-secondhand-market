@@ -6,61 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>프로필 수정</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body {
-    background: #f0f0f0;
-    font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  .frame {
-    width: 390px;
-    min-height: 844px;
-    background: #ffffff;
-    position: relative;
-    margin: 40px auto;
-    padding-bottom: 100px;
-  }
-  .topbar {
-    width: 390px; height: 56px;
-    border-bottom: 1px solid #e5e5e5;
-    display: flex; align-items: center; padding: 0 16px;
-  }
-  .icon-btn {
-    width: 40px; height: 40px;
-    display: inline-flex; align-items: center; justify-content: center;
-    background: transparent; border: 0; color: #000; cursor: pointer; text-decoration: none;
-  }
-  .icon-btn svg { width: 22px; height: 22px; }
-  .topbar-title { flex: 1; text-align: center; font-size: 16px; font-weight: 600; margin-right: 40px; }
-
+  .frame { padding-bottom: 100px; }
   .avatar-section { display: flex; justify-content: center; padding: 28px 0 8px; }
-  .avatar {
-    width: 96px; height: 96px; border-radius: 9999px;
-    object-fit: cover; background: #fafafa; border: 1px solid #e5e5e5;
-  }
-
   .form { padding: 16px 24px; display: flex; flex-direction: column; gap: 16px; }
-  .field { display: flex; flex-direction: column; gap: 8px; }
-  .label { font-size: 14px; font-weight: 500; padding-left: 8px; }
-  .input, .select {
-    width: 100%; height: 44px; padding: 8px 16px;
-    border-radius: 9999px; border: 1px solid #e5e5e5; background: #fff;
-    font-family: inherit; font-size: 16px; outline: none;
-  }
-  .input:disabled { background: #f5f5f5; color: #a3a3a3; }
-  .hint { font-size: 12px; color: #a3a3a3; padding-left: 8px; }
-
-  .action-bar {
-    position: absolute; bottom: 0; left: 0; width: 390px; height: 80px;
-    background: #fff; border-top: 1px solid #e5e5e5;
-    display: flex; align-items: center; padding: 0 24px;
-  }
-  .submit-btn {
-    width: 342px; height: 48px; border-radius: 9999px;
-    background: #ff6f0f; color: #fff; border: 0;
-    font-size: 15px; font-weight: 600; cursor: pointer;
-  }
 </style>
 </head>
 <body>
@@ -72,7 +22,7 @@
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </a>
-      <div class="topbar-title">프로필 수정</div>
+      <div class="topbar-title offset-back">프로필 수정</div>
     </div>
 
     <c:set var="avatar" value="${empty user.profileImage ? 'https://i.pravatar.cc/192?u='.concat(user.id) : (fn:startsWith(user.profileImage, '/') ? pageContext.request.contextPath.concat(user.profileImage) : user.profileImage)}"/>
@@ -114,7 +64,7 @@
       </div>
 
       <div class="action-bar">
-        <button class="submit-btn" type="submit">저장</button>
+        <button class="btn btn-primary btn-block" type="submit">저장</button>
       </div>
     </form>
 

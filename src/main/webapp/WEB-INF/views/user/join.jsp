@@ -5,155 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/design.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html, body {
-    background: #f0f0f0;
-    font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* 모바일 프레임 */
   .frame {
-    width: 390px;
-    height: 844px;
-    background: #ffffff;
-    position: relative;
-    overflow: hidden;
-    margin: 40px auto;
-  }
-
-  /* hero */
-  .hero {
-    position: absolute;
-    top: 48px;
-    left: 24px;
-    width: 342px;
-  }
-  .headline {
-    font-family: "SF Pro Rounded", "SF Pro Display", system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
-    font-size: 36px;
-    font-weight: 500;
-    line-height: 1.15;
-    color: #000000;
-    text-align: left;
-  }
-
-  /* form */
-  .form {
-    position: absolute;
-    top: 136px;
-    left: 24px;
-    width: 342px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    padding: 48px 24px 32px;
   }
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .label {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    color: #000000;
-    padding-left: 8px;
-  }
-  .input-wrap {
-    position: relative;
-  }
-  .input,
-  .select {
-    width: 100%;
-    height: 44px;
-    padding: 8px 16px;
-    border-radius: 9999px;
-    border: 1px solid #e5e5e5;
-    background: #ffffff;
-    color: #000000;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    outline: none;
-  }
-  .input::placeholder { color: #a3a3a3; }
-  .input.has-icon { padding-right: 44px; }
-
-  .select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    padding-right: 44px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23737373' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-    cursor: pointer;
-  }
-  .select.is-placeholder { color: #a3a3a3; }
-
-  .input-icon {
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 0;
-    border-radius: 9999px;
-    cursor: pointer;
-    color: #737373;
-    padding: 0;
-  }
-  .input-icon svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 48px;
-    border-radius: 9999px;
-    background: #000000;
-    color: #ffffff;
-    border: 0;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1;
-    cursor: pointer;
-    margin-top: 8px;
-  }
-
-  /* footer */
-  .footer-prompt {
-    position: absolute;
-    bottom: 32px;
-    left: 0;
-    width: 390px;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    color: #737373;
-  }
-  .link-inline {
-    color: #000000;
-    font-weight: 500;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    margin-left: 4px;
-  }
+  .hero { margin-bottom: 32px; }
+  .form { display: flex; flex-direction: column; gap: 16px; }
+  .form .btn { margin-top: 8px; }
+  .footer-prompt { margin-top: auto; padding-top: 32px; }
 </style>
 </head>
 <body>
@@ -165,14 +27,15 @@
     </header>
 
     <!-- form -->
-    <%-- 가입 실패 메시지 (UserController에서 전달, c:out으로 XSS 방지) --%>
-    <c:if test="${not empty errorMessage}">
-      <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><c:out value="${errorMessage}"/></div>
-    </c:if>
-
     <form class="form" method="post"
           action="<%= request.getContextPath() %>/user/join"
           onsubmit="return checkJoin(this);">
+
+      <%-- 가입 실패 메시지 (UserController에서 전달, c:out으로 XSS 방지) --%>
+      <c:if test="${not empty errorMessage}">
+        <div class="error-msg"><c:out value="${errorMessage}"/></div>
+      </c:if>
+
       <!-- 이름(닉네임) -->
       <div class="field">
         <label class="label" for="nickname">이름</label>
@@ -248,7 +111,7 @@
         </div>
       </div>
 
-      <button type="submit" class="btn">회원가입</button>
+      <button type="submit" class="btn btn-primary btn-block">회원가입</button>
     </form>
 
     <!-- footer -->

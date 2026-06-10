@@ -1,11 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<<<<<<< HEAD
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+=======
+>>>>>>> origin/main
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<<<<<<< HEAD
 <title>${product.title} - 상품 상세</title>
+=======
+<title>상품 상세</title>
+>>>>>>> origin/main
 <style>
   /*
     ───────────────────────────────────────────────
@@ -192,8 +199,12 @@
 
     <!-- 상단바 -->
     <div class="topbar">
+<<<<<<< HEAD
       <button class="icon-btn" type="button" aria-label="뒤로"
               onclick="location.href='${pageContext.request.contextPath}/product/'">
+=======
+      <button class="icon-btn" type="button" aria-label="뒤로">
+>>>>>>> origin/main
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
@@ -202,11 +213,16 @@
 
     <!-- 상품 사진 -->
     <div class="product-image">
+<<<<<<< HEAD
       <img src="${empty product.thumbnail ? 'https://picsum.photos/seed/'.concat(product.id).concat('/780/640') : product.thumbnail}" alt="${product.title}">
+=======
+      <img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=780&h=640&fit=crop" alt="햇사과">
+>>>>>>> origin/main
     </div>
 
     <!-- 상품 정보 -->
     <div class="content">
+<<<<<<< HEAD
       <div class="seller">${seller.nickname} · ${seller.region} · 매너온도 ${seller.mannerTemp}℃</div>
       <h1 class="title">${product.title}</h1>
       <div class="price"><fmt:formatNumber value="${product.price}" />원</div>
@@ -225,11 +241,23 @@
           </form>
         </div>
       </c:if>
+=======
+      <div class="seller">햇과일 농장 · 과일</div>
+      <h1 class="title">당도 높은 햇사과</h1>
+      <div class="price">12,000원</div>
+      <div class="shipping">택배배송 · 배송비 2,500원</div>
+      <div class="divider"></div>
+      <p class="description">제주에서 직접 수확한 햇사과입니다. 당도 14브릭스 이상, 사각거리는 식감과 진한 향이 살아있어요. 5kg 박스 기준 약 18~22개 들어있습니다.</p>
+>>>>>>> origin/main
     </div>
 
     <!-- 하단 액션바 -->
     <div class="action-bar">
+<<<<<<< HEAD
       <button class="buy-btn" type="button" onclick="alert('결제(포트원) 연동은 준비 중입니다.')">구매하기</button>
+=======
+      <button class="buy-btn" type="button">구매하기</button>
+>>>>>>> origin/main
     </div>
 
   </div>

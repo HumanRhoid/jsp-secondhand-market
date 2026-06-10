@@ -163,6 +163,7 @@
       <h1 class="headline">안녕하세요,<br>로그인하세요</h1>
     </header>
 
+<<<<<<< HEAD
     <%-- 로그인 실패 메시지 (UserController에서 전달) --%>
     <% if (request.getAttribute("error") != null) { %>
       <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><%= request.getAttribute("error") %></div>
@@ -170,6 +171,10 @@
 
     <!-- form -->
     <form class="form" method="post" action="<%= request.getContextPath() %>/user/login">
+=======
+    <!-- form -->
+    <form class="form" onsubmit="event.preventDefault();">
+>>>>>>> origin/main
       <div class="field">
         <label class="label" for="email">이메일</label>
         <div class="input-wrap">
@@ -206,7 +211,11 @@
 
     <!-- footer -->
     <div class="footer-prompt">
+<<<<<<< HEAD
       계정이 없으신가요?<a class="link-inline" href="join.jsp">회원가입</a>
+=======
+      계정이 없으신가요?<a class="link-inline" href="#">회원가입</a>
+>>>>>>> origin/main
     </div>
 
   </div>

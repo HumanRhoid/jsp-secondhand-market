@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<<<<<<< HEAD
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+=======
+>>>>>>> origin/main
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,9 +12,16 @@
 <style>
   /*
     ───────────────────────────────────────────────
+<<<<<<< HEAD
     FIGMA-READY — 390px 모바일 프레임 (동적 데이터 연동판)
     - 카드 그리드는 DB(products) 데이터로 렌더링
     - 인기 매물 스트립은 Redis 랭킹 TOP 4 (Redis 미동작 시 자동 미표시)
+=======
+    FIGMA-READY — 390 × 1140 모바일 프레임
+    - 모든 치수 px 고정 (no vh/vw/%/aspect-ratio)
+    - position: sticky 없음
+    - 미디어 쿼리 없음
+>>>>>>> origin/main
     ───────────────────────────────────────────────
   */
 
@@ -23,6 +33,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
+<<<<<<< HEAD
   /* 모바일 프레임 (내용 길이에 맞춰 늘어나도록 변경) */
   .frame {
     width: 390px;
@@ -31,10 +42,26 @@
     position: relative;
     margin: 40px auto;
     padding-bottom: 40px;
+=======
+  /* 모바일 프레임 */
+  .frame {
+    width: 390px;
+    height: 1140px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    margin: 40px auto;
+>>>>>>> origin/main
   }
 
   /* 상단 검색바 */
   .topbar {
+<<<<<<< HEAD
+=======
+    position: absolute;
+    top: 0;
+    left: 0;
+>>>>>>> origin/main
     width: 390px;
     height: 56px;
     background: #ffffff;
@@ -65,6 +92,7 @@
     color: #a3a3a3;
   }
 
+<<<<<<< HEAD
   /* 인기 매물 스트립 (Redis 랭킹) */
   .popular {
     width: 342px;
@@ -109,6 +137,14 @@
   .grid {
     width: 342px;
     margin: 24px auto 0;
+=======
+  /* 그리드 */
+  .grid {
+    position: absolute;
+    top: 80px;
+    left: 24px;
+    width: 342px;
+>>>>>>> origin/main
     display: grid;
     grid-template-columns: 163px 163px;
     column-gap: 16px;
@@ -119,7 +155,10 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+<<<<<<< HEAD
     text-decoration: none;
+=======
+>>>>>>> origin/main
   }
   .card-image {
     width: 163px;
@@ -149,12 +188,15 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+<<<<<<< HEAD
   .card-price {
     font-size: 15px;
     font-weight: 700;
     line-height: 20px;
     color: #000000;
   }
+=======
+>>>>>>> origin/main
   .card-desc {
     font-size: 14px;
     font-weight: 400;
@@ -165,6 +207,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+<<<<<<< HEAD
   .card-status {
     font-size: 12px;
     color: #2e9e4f;
@@ -176,6 +219,8 @@
     color: #a3a3a3;
     font-size: 14px;
   }
+=======
+>>>>>>> origin/main
 </style>
 </head>
 <body>
@@ -192,6 +237,7 @@
       </div>
     </div>
 
+<<<<<<< HEAD
     <!-- 인기 매물 (Redis 조회수 랭킹 TOP 4) -->
     <c:if test="${not empty popular}">
       <div class="popular">
@@ -227,6 +273,73 @@
           </div>
         </a>
       </c:forEach>
+=======
+    <!-- 매물 그리드 -->
+    <div class="grid">
+      <div class="card">
+        <div class="card-image"><img src="https://picsum.photos/seed/freitag/326/326" alt=""></div>
+        <div class="card-text">
+          <div class="card-title">프라이탁 메신저백</div>
+          <div class="card-desc">F41 해리스 모델, 짙은 카키와 머스타드 패치 조합. 사용감 적습니다.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"><img src="https://picsum.photos/seed/ipad/326/326" alt=""></div>
+        <div class="card-text">
+          <div class="card-title">아이패드 프로 11인치</div>
+          <div class="card-desc">스페이스 그레이 256GB Wi-Fi. 풀박스 + 애플펜슬 2세대.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"><img src="https://picsum.photos/seed/levis/326/326" alt=""></div>
+        <div class="card-text">
+          <div class="card-title">리바이스 501 청바지</div>
+          <div class="card-desc">90년대 빅이 셀비지 데님. 32x32, 자연스러운 페이드.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"><img src="https://picsum.photos/seed/airpods/326/326" alt=""></div>
+        <div class="card-text">
+          <div class="card-title">에어팟 프로 2세대</div>
+          <div class="card-desc">USB-C 모델, 작년 12월 구매. 배터리 상태 매우 좋습니다.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"><img src="https://picsum.photos/seed/chair/326/326" alt=""></div>
+        <div class="card-text">
+          <div class="card-title">무지 원목 다이닝 체어</div>
+          <div class="card-desc">참나무 원목, 2개 세트. 직접 픽업만 가능합니다.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"><img src="https://picsum.photos/seed/switch/326/326" alt=""></div>
+        <div class="card-text">
+          <div class="card-title">닌텐도 스위치 OLED</div>
+          <div class="card-desc">화이트, 젤다 왕국의 눈물 칩 포함. 액정 필름 부착 상태.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"><img src="https://picsum.photos/seed/lecreuset/326/326" alt=""></div>
+        <div class="card-text">
+          <div class="card-title">르크루제 무쇠 냄비</div>
+          <div class="card-desc">24cm 라운드, 체리레드. 결혼 선물로 받았는데 거의 안 썼어요.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"><img src="https://picsum.photos/seed/helinox/326/326" alt=""></div>
+        <div class="card-text">
+          <div class="card-title">헬리녹스 체어원</div>
+          <div class="card-desc">블랙 컬러, 정품 보관 파우치 포함. 컨디션 좋습니다.</div>
+        </div>
+      </div>
+>>>>>>> origin/main
     </div>
 
   </div>

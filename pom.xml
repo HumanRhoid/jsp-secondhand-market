@@ -36,6 +36,7 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.7.11</version>
 		</dependency>
+<<<<<<< HEAD
 
 		<!-- Redis 클라이언트 (인기 매물 랭킹 캐싱) -->
 		<dependency>
@@ -55,6 +56,8 @@
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
 			<version>3.0.1</version>
 		</dependency>
+=======
+>>>>>>> origin/main
 	</dependencies>
 
 	<build>

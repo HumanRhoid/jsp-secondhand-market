@@ -1,0 +1,40 @@
+# 중고거래 플랫폼 — 앱 + DB + Redis 한 번에 실행
+# 사용: docker compose up --build  →  http://localhost:8080/secondhand/
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: SecondheadServiceDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "990909"
+    volumes:
+      # 최초 1회 자동 실행되는 초기화 SQL (스키마 + 현재 데이터 덤프)
+      - ./docker/db-init:/docker-entrypoint-initdb.d:ro
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d SecondheadServiceDB"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  redis:
+    image: redis:7
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    volumes:
+      # 업로드된 사진 영속화
+      - uploads:/data/upload
+
+volumes:
+  pgdata:
+  uploads:

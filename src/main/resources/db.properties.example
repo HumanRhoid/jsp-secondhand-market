@@ -6,3 +6,6 @@ db.password=YOUR_PASSWORD
 
 redis.host=localhost
 redis.port=6379
+
+# 업로드된 매물 사진을 저장할 외부 폴더 (앱 바깥 → 재배포해도 사진 유지). 슬래시(/) 사용
+upload.dir=C:/Users/계정명/upload

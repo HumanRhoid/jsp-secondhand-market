@@ -55,20 +55,37 @@ public class ProductService {
             productDAO.increaseViewCount(id);
             RedisManager.incrementProductRank(id);
             product.setViewCount(product.getViewCount() + 1); // 화면 표시용 보정
+            product.setImages(productDAO.findImageUrls(id)); // 상세 갤러리용 전체 사진
             return product;
         } catch (SQLException e) {
             throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
         }
     }
 
-    /** 상품 등록. 검증 실패 시 G001 */
-    public void write(long userId, ProductDTO product) {
+    /** 상품 등록. 검증 실패 시 G001. imageUrls의 첫 장이 대표 사진(thumbnail), 전체는 product_images에 저장. */
+    public void write(long userId, ProductDTO product, List<String> imageUrls) {
         ValidationUtil.validateRequired(product.getTitle(), "title");
         ValidationUtil.validatePositive(product.getPrice(), "price");
         try {
             product.setUserId(userId);
-            productDAO.insert(product);
-            log.info("상품 등록: userId={}, title={}", userId, product.getTitle());
+            if (imageUrls != null && !imageUrls.isEmpty()) {
+                product.setThumbnail(imageUrls.get(0)); // 첫 장을 대표 사진으로
+            }
+            long productId = productDAO.insert(product);
+            productDAO.insertImages(productId, imageUrls);
+            log.info("상품 등록: userId={}, title={}, 사진 {}장", userId, product.getTitle(),
+                    imageUrls == null ? 0 : imageUrls.size());
+        } catch (SQLException e) {
+            throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
+        }
+    }
+
+    /** 수정 폼용 조회. 소유자가 아니면 P002. 조회수는 올리지 않는다. */
+    public ProductDTO getForEdit(long loginUserId, long productId) {
+        try {
+            ProductDTO product = verifyOwner(loginUserId, productId);
+            product.setImages(productDAO.findImageUrls(productId));
+            return product;
         } catch (SQLException e) {
             throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
         }

@@ -42,7 +42,8 @@
 	<filter-mapping>
 		<filter-name>loginCheckFilter</filter-name>
 		<url-pattern>/product/form</url-pattern>
-		<url-pattern>/product/write</url-pattern>
+		<url-pattern>/product/edit</url-pattern>
+			<url-pattern>/product/write</url-pattern>
 		<url-pattern>/product/update</url-pattern>
 		<url-pattern>/product/delete</url-pattern>
 		<url-pattern>/user/profile</url-pattern>

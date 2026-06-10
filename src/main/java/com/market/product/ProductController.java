@@ -1,13 +1,20 @@
 package com.market.product;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
+import com.market.global.config.AppConfig;
 import com.market.global.exception.CustomException;
 import com.market.global.exception.GlobalErrorCode;
 import com.market.user.SessionUser;
@@ -16,8 +23,13 @@ import com.market.user.UserService;
 /**
  * 상품 Servlet. 요청 파라미터 추출과 응답(forward/redirect)만 담당하고
  * 비즈니스 로직(소유자 검증, 조회수/랭킹)은 ProductService에 위임한다 (MVC2).
+ * 사진 업로드를 위해 multipart/form-data를 처리한다 (파일은 외부 폴더 저장, DB엔 경로만).
  */
 @WebServlet("/product/*")
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024,      // 1MB 넘으면 디스크에 버퍼
+        maxFileSize = 10L * 1024 * 1024,      // 파일 1개 최대 10MB
+        maxRequestSize = 50L * 1024 * 1024)   // 요청 전체 최대 50MB
 public class ProductController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -33,6 +45,7 @@ public class ProductController extends HttpServlet {
             case "/", "/list" -> list(req, resp);
             case "/detail"    -> detail(req, resp);
             case "/form"      -> req.getRequestDispatcher("/WEB-INF/views/product/form.jsp").forward(req, resp); // LoginCheckFilter가 보호
+            case "/edit"      -> editForm(req, resp); // LoginCheckFilter가 보호
             default           -> resp.sendRedirect(req.getContextPath() + "/product/");
         }
     }
@@ -66,6 +79,19 @@ public class ProductController extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/views/product/detail.jsp").forward(req, resp);
     }
 
+    // 수정 폼: 소유자 검증 후 기존 상품 정보를 실어 edit.jsp로 forward
+    private void editForm(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        SessionUser loginUser = SessionUser.current(req);
+        if (loginUser == null) {
+            resp.sendRedirect(req.getContextPath() + "/user/login");
+            return;
+        }
+        ProductDTO product = productService.getForEdit(loginUser.getId(), parseLong(req.getParameter("id")));
+        req.setAttribute("product", product);
+        req.getRequestDispatcher("/WEB-INF/views/product/edit.jsp").forward(req, resp);
+    }
+
     private void write(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         SessionUser loginUser = SessionUser.current(req);
@@ -77,9 +103,9 @@ public class ProductController extends HttpServlet {
         product.setTitle(req.getParameter("title"));
         product.setDescription(req.getParameter("description"));
         product.setPrice((int) parseLong(req.getParameter("price")));
-        product.setThumbnail(req.getParameter("thumbnail"));
+        List<String> photoPaths = savePhotos(req); // 업로드 사진들 저장 후 경로(/images/...) 목록, 없으면 빈 목록
         try {
-            productService.write(loginUser.getId(), product);
+            productService.write(loginUser.getId(), product, photoPaths);
         } catch (CustomException e) {
             if (e.getErrorCode() != GlobalErrorCode.INVALID_INPUT) throw e;
             // 검증 실패 → 등록 폼으로 되돌림
@@ -90,7 +116,7 @@ public class ProductController extends HttpServlet {
         resp.sendRedirect(req.getContextPath() + "/product/");
     }
 
-    private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SessionUser loginUser = SessionUser.current(req);
         if (loginUser == null) {
             resp.sendRedirect(req.getContextPath() + "/user/login");
@@ -102,7 +128,9 @@ public class ProductController extends HttpServlet {
         form.setDescription(req.getParameter("description"));
         form.setPrice((int) parseLong(req.getParameter("price")));
         form.setStatus(req.getParameter("status"));
-        form.setThumbnail(req.getParameter("thumbnail"));
+        List<String> newPhotos = savePhotos(req);
+        // 새 사진을 올렸으면 대표 사진 교체, 아니면 기존 경로(hidden 필드 currentThumbnail) 유지
+        form.setThumbnail(!newPhotos.isEmpty() ? newPhotos.get(0) : req.getParameter("currentThumbnail"));
         productService.update(loginUser.getId(), form);
         resp.sendRedirect(req.getContextPath() + "/product/detail?id=" + form.getId());
     }
@@ -115,6 +143,33 @@ public class ProductController extends HttpServlet {
         }
         productService.delete(loginUser.getId(), parseLong(req.getParameter("id")));
         resp.sendRedirect(req.getContextPath() + "/product/");
+    }
+
+    /**
+     * 업로드된 사진들(part name="photos")을 외부 폴더(upload.dir)에 UUID 파일명으로 저장하고
+     * 화면에서 접근할 경로(/images/{파일명}) 목록을 반환한다. 업로드가 없으면 빈 목록.
+     */
+    private List<String> savePhotos(HttpServletRequest req) throws ServletException, IOException {
+        List<String> paths = new ArrayList<>();
+        File dir = new File(AppConfig.get("upload.dir"));
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        for (Part part : req.getParts()) {
+            if (!"photos".equals(part.getName()) || part.getSize() == 0) {
+                continue; // 사진 파트가 아니거나 빈 파일
+            }
+            String submitted = part.getSubmittedFileName();
+            String ext = "";
+            int dot = submitted == null ? -1 : submitted.lastIndexOf('.');
+            if (dot >= 0) {
+                ext = submitted.substring(dot).toLowerCase();
+            }
+            String filename = UUID.randomUUID() + ext;
+            part.write(new File(dir, filename).getAbsolutePath());
+            paths.add("/images/" + filename);
+        }
+        return paths;
     }
 
     private long parseLong(String value) {

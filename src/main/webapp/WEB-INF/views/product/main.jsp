@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -41,10 +42,23 @@
     border-bottom: 1px solid #e5e5e5;
     display: flex;
     align-items: center;
-    padding: 0 24px;
+    gap: 8px;
+    padding: 0 16px;
   }
+  .topbar-action {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    color: #000;
+    text-decoration: none;
+  }
+  .topbar-action svg { width: 24px; height: 24px; }
   .search-pill {
-    width: 342px;
+    flex: 1;
     height: 36px;
     background: #fafafa;
     border-radius: 9999px;
@@ -176,6 +190,37 @@
     color: #a3a3a3;
     font-size: 14px;
   }
+  .empty-cta {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 10px 20px;
+    background: #ff6f0f;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 9999px;
+    text-decoration: none;
+  }
+
+  /* 판매하기 플로팅 버튼 */
+  .fab {
+    position: fixed;
+    left: 50%;
+    transform: translateX(127px); /* 프레임(390px) 우하단에 고정 */
+    bottom: 32px;
+    width: 56px;
+    height: 56px;
+    border-radius: 9999px;
+    background: #ff6f0f;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    text-decoration: none;
+    z-index: 50;
+  }
+  .fab svg { width: 28px; height: 28px; }
 </style>
 </head>
 <body>
@@ -190,6 +235,27 @@
         </svg>
         <span class="placeholder">찾는 물건을 검색하세요</span>
       </div>
+
+      <%-- 로그인 상태면 내 프로필, 아니면 로그인으로 --%>
+      <c:choose>
+        <c:when test="${not empty sessionScope.loginUser}">
+          <a class="topbar-action" href="${pageContext.request.contextPath}/user/profile" title="내 프로필">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"></path>
+            </svg>
+          </a>
+        </c:when>
+        <c:otherwise>
+          <a class="topbar-action" href="${pageContext.request.contextPath}/user/login" title="로그인">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+          </a>
+        </c:otherwise>
+      </c:choose>
     </div>
 
     <!-- 인기 매물 (Redis 조회수 랭킹 TOP 4) -->
@@ -209,13 +275,17 @@
 
     <!-- 매물 그리드 (DB 연동) -->
     <c:if test="${empty products}">
-      <div class="empty">아직 등록된 매물이 없어요.<br>첫 매물을 등록해 보세요!</div>
+      <div class="empty">
+        아직 등록된 매물이 없어요.<br>첫 매물을 등록해 보세요!<br>
+        <a class="empty-cta" href="${pageContext.request.contextPath}/product/form">+ 매물 등록하기</a>
+      </div>
     </c:if>
     <div class="grid">
       <c:forEach var="p" items="${products}">
+        <c:set var="thumb" value="${empty p.thumbnail ? 'https://picsum.photos/seed/'.concat(p.id).concat('/326/326') : (fn:startsWith(p.thumbnail, '/') ? pageContext.request.contextPath.concat(p.thumbnail) : p.thumbnail)}"/>
         <a class="card" href="${pageContext.request.contextPath}/product/detail?id=${p.id}">
           <div class="card-image">
-            <img src="<c:out value="${empty p.thumbnail ? 'https://picsum.photos/seed/'.concat(p.id).concat('/326/326') : p.thumbnail}"/>" alt="<c:out value="${p.title}"/>">
+            <img src="<c:out value='${thumb}'/>" alt="<c:out value="${p.title}"/>">
           </div>
           <div class="card-text">
             <div class="card-title"><c:out value="${p.title}"/></div>
@@ -228,6 +298,14 @@
         </a>
       </c:forEach>
     </div>
+
+    <!-- 판매하기 (매물 등록 폼으로 이동, 비로그인 시 LoginCheckFilter가 로그인 페이지로 유도) -->
+    <a class="fab" href="${pageContext.request.contextPath}/product/form" title="판매하기">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    </a>
 
   </div>
 </body>

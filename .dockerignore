@@ -1,0 +1,10 @@
+# 빌드 컨텍스트에서 제외 (이미지 가볍게 + 빌드 빠르게)
+target/
+.git/
+.settings/
+.classpath
+.project
+bin/
+*.log
+# 로컬 전용 db.properties는 컨테이너에선 docker/db.properties로 대체되므로 제외
+src/main/resources/db.properties

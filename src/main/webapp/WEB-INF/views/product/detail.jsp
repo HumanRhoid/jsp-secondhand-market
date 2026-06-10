@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -86,6 +87,18 @@
     height: 320px;
     object-fit: cover;
     display: block;
+  }
+  /* 여러 장: 좌우 스와이프 갤러리 */
+  .product-image .gallery {
+    display: flex;
+    width: 390px;
+    height: 320px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .product-image .gallery img {
+    flex: 0 0 390px;
+    scroll-snap-align: start;
   }
 
   /* 정보 영역 */
@@ -200,9 +213,21 @@
       </button>
     </div>
 
-    <!-- 상품 사진 -->
+    <!-- 상품 사진 (여러 장이면 좌우 스와이프 갤러리, 없으면 대표/임시 이미지) -->
     <div class="product-image">
-      <img src="<c:out value="${empty product.thumbnail ? 'https://picsum.photos/seed/'.concat(product.id).concat('/780/640') : product.thumbnail}"/>" alt="<c:out value="${product.title}"/>">
+      <c:choose>
+        <c:when test="${not empty product.images}">
+          <div class="gallery">
+            <c:forEach var="img" items="${product.images}">
+              <img src="${pageContext.request.contextPath}<c:out value='${img}'/>" alt="<c:out value="${product.title}"/>">
+            </c:forEach>
+          </div>
+        </c:when>
+        <c:otherwise>
+          <c:set var="thumb" value="${empty product.thumbnail ? 'https://picsum.photos/seed/'.concat(product.id).concat('/780/640') : (fn:startsWith(product.thumbnail, '/') ? pageContext.request.contextPath.concat(product.thumbnail) : product.thumbnail)}"/>
+          <img src="<c:out value='${thumb}'/>" alt="<c:out value="${product.title}"/>">
+        </c:otherwise>
+      </c:choose>
     </div>
 
     <!-- 상품 정보 -->
@@ -217,6 +242,8 @@
       <%-- 본인 매물일 때만 관리 메뉴 노출 --%>
       <c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.id == product.userId}">
         <div style="margin-top:20px; display:flex; gap:8px;">
+          <a href="${pageContext.request.contextPath}/product/edit?id=${product.id}"
+             style="flex:1; height:40px; border-radius:9999px; border:1px solid #d4d4d4; background:#fff; color:#000; display:flex; align-items:center; justify-content:center; text-decoration:none;">수정</a>
           <form method="post" action="${pageContext.request.contextPath}/product/delete"
                 onsubmit="return confirm('정말 삭제하시겠습니까?');" style="flex:1;">
             <input type="hidden" name="id" value="${product.id}">

@@ -34,10 +34,22 @@ public class UserController extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + "/product/");
             }
             // 아래 둘은 LoginCheckFilter가 보호
-            case "/profile" -> req.getRequestDispatcher("/WEB-INF/views/user/profile.jsp").forward(req, resp);
-            case "/edit"    -> req.getRequestDispatcher("/WEB-INF/views/user/profileEdit.jsp").forward(req, resp);
+            case "/profile" -> showUserPage(req, resp, "/WEB-INF/views/user/profile.jsp");
+            case "/edit"    -> showUserPage(req, resp, "/WEB-INF/views/user/profileEdit.jsp");
             default         -> resp.sendRedirect(req.getContextPath() + "/product/");
         }
+    }
+
+    /** 로그인 사용자의 전체 정보(UserDTO)를 "user"로 실어 프로필/수정 화면으로 forward한다. */
+    private void showUserPage(HttpServletRequest req, HttpServletResponse resp, String view)
+            throws ServletException, IOException {
+        SessionUser loginUser = SessionUser.current(req);
+        if (loginUser == null) {
+            resp.sendRedirect(req.getContextPath() + "/user/login");
+            return;
+        }
+        req.setAttribute("user", userService.findById(loginUser.getId()));
+        req.getRequestDispatcher(view).forward(req, resp);
     }
 
     @Override

@@ -17,6 +17,8 @@ target/
 # DB/Redis 접속 정보 (db.properties.example 참고)
 src/main/resources/db.properties
 
+# Docker 접속 정보(docker/db.properties)와 db-init 덤프는 더미 데이터라 커밋에 포함
+
 # OS
 Thumbs.db
 .DS_Store

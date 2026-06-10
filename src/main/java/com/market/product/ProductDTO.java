@@ -2,6 +2,8 @@ package com.market.product;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDTO implements Serializable {
 
@@ -14,12 +16,13 @@ public class ProductDTO implements Serializable {
     private String    description;
     private String    status;       // 판매중 / 예약중 / 판매완료
     private int       price;
-    private String    thumbnail;
+    private String    thumbnail;     // 대표 사진(첫 장) 경로
     private int       viewCount;
     private int       likeCount;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Timestamp deletedAt;
+    private List<String> images = new ArrayList<>(); // 상세용 전체 사진 경로 목록(product_images)
 
     public long getId()              { return id; }
     public void setId(long id)       { this.id = id; }
@@ -59,4 +62,7 @@ public class ProductDTO implements Serializable {
 
     public Timestamp getDeletedAt()                    { return deletedAt; }
     public void      setDeletedAt(Timestamp deletedAt) { this.deletedAt = deletedAt; }
+
+    public List<String> getImages()                    { return images; }
+    public void         setImages(List<String> images) { this.images = images; }
 }

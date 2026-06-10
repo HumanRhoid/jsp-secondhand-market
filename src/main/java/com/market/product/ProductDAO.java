@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,18 +37,51 @@ public class ProductDAO {
         return null;
     }
 
-    // 상품 등록
-    public void insert(ProductDTO product) throws SQLException {
+    // 상품 등록 → 생성된 id 반환 (product_images 적재에 사용)
+    public long insert(ProductDTO product) throws SQLException {
         String sql = "INSERT INTO products (user_id, title, description, price, status, thumbnail) VALUES (?, ?, ?, ?, '판매중', ?)";
         try (Connection con = DBManager.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setLong(1, product.getUserId());
             ps.setString(2, product.getTitle());
             ps.setString(3, product.getDescription());
             ps.setInt(4, product.getPrice());
             ps.setString(5, product.getThumbnail());
             ps.executeUpdate();
+            try (ResultSet keys = ps.getGeneratedKeys()) {
+                if (keys.next()) return keys.getLong(1);
+            }
         }
+        return 0;
+    }
+
+    // 상품 사진 여러 장 일괄 저장 (product_images)
+    public void insertImages(long productId, List<String> imageUrls) throws SQLException {
+        if (imageUrls == null || imageUrls.isEmpty()) return;
+        String sql = "INSERT INTO product_images (product_id, image_url) VALUES (?, ?)";
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            for (String url : imageUrls) {
+                ps.setLong(1, productId);
+                ps.setString(2, url);
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        }
+    }
+
+    // 상품 사진 경로 목록 (등록 순)
+    public List<String> findImageUrls(long productId) throws SQLException {
+        String sql = "SELECT image_url FROM product_images WHERE product_id = ? ORDER BY id";
+        List<String> urls = new ArrayList<>();
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setLong(1, productId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) urls.add(rs.getString("image_url"));
+            }
+        }
+        return urls;
     }
 
     // 상품 수정

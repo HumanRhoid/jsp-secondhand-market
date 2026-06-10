@@ -50,6 +50,7 @@
 		<url-pattern>/user/update</url-pattern>
 		<url-pattern>/user/edit</url-pattern>
 			<url-pattern>/user/delete</url-pattern>
+			<url-pattern>/board/write</url-pattern>
 	</filter-mapping>
 
 	<session-config>

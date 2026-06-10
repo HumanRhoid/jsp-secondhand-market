@@ -255,8 +255,12 @@
     </div>
 
     <!-- 하단 액션바 -->
-    <div class="action-bar">
-      <button class="buy-btn" type="button" onclick="alert('결제(포트원) 연동은 준비 중입니다.')">구매하기</button>
+    <div class="action-bar" style="gap:8px;">
+      <form method="post" action="${pageContext.request.contextPath}/cart/add" style="flex:0 0 auto;">
+        <input type="hidden" name="id" value="${product.id}">
+        <button type="submit" style="height:48px; padding:0 18px; border-radius:9999px; border:1px solid #d4d4d4; background:#fff; cursor:pointer;">장바구니</button>
+      </form>
+      <button class="buy-btn" type="button" style="flex:1;" onclick="alert('결제(포트원) 연동은 준비 중입니다.')">구매하기</button>
     </div>
 
   </div>

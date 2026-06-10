@@ -41,6 +41,21 @@ public class ProductService {
         }
     }
 
+    /** id 목록으로 상품 조회 (장바구니용). 삭제됐거나 없는 건 건너뛴다. */
+    public List<ProductDTO> getProductsByIds(java.util.Collection<Long> ids) {
+        List<ProductDTO> list = new ArrayList<>();
+        if (ids == null) return list;
+        try {
+            for (Long id : ids) {
+                ProductDTO p = productDAO.findById(id);
+                if (p != null) list.add(p);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
+        }
+    }
+
     /** Redis 인기 랭킹 상위 상품 목록 (Redis 장애 시 빈 목록) */
     public List<ProductDTO> getPopularProducts(int count) {
         try {

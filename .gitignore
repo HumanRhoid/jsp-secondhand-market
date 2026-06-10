@@ -1,0 +1,19 @@
+.metadata/
+.settings/
+.project
+.classpath
+build/
+bin/
+out/
+.idea/
+*.iml
+
+# Claude Code 로컬 설정
+.claude/
+
+# Maven 빌드 결과물
+target/
+
+# OS
+Thumbs.db
+.DS_Store

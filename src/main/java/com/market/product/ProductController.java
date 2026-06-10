@@ -96,7 +96,7 @@ public class ProductController extends HttpServlet {
         ProductDTO product = productService.getProductDetail(parseLong(req.getParameter("id")));
         req.setAttribute("product", product);
         req.setAttribute("seller", userService.findById(product.getUserId()));
-        req.setAttribute("impCode", AppConfig.get("portone.imp.code")); // 포트원 결제창 호출용
+        req.setAttribute("tossClientKey", AppConfig.get("toss.client.key")); // 토스 결제창 호출용
         req.getRequestDispatcher("/WEB-INF/views/product/detail.jsp").forward(req, resp);
     }
 

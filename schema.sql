@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS orders (
     id           BIGSERIAL    PRIMARY KEY,
     product_id   BIGINT       NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     buyer_id     BIGINT       REFERENCES users(id) ON DELETE SET NULL,
-    imp_uid      VARCHAR(100) NOT NULL UNIQUE,
+    payment_key  VARCHAR(200) NOT NULL UNIQUE,
     merchant_uid VARCHAR(100) NOT NULL,
     amount       INT          NOT NULL,
     status       VARCHAR(20)  NOT NULL DEFAULT 'paid',

@@ -263,38 +263,33 @@
       <button class="buy-btn" type="button" style="flex:1;" onclick="requestPay()">구매하기</button>
     </div>
 
-  <%-- 포트원(아임포트) 결제. 키 미설정 시 안내만 표시 --%>
-  <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+  <%-- 토스페이먼츠 결제 (테스트 키 — 실결제 없음). 성공 시 /order/success에서 서버 승인(confirm) --%>
+  <script src="https://js.tosspayments.com/v1/payment"></script>
   <script>
-    var IMP_CODE = '<c:out value="${impCode}"/>';
+    var TOSS_KEY = '<c:out value="${tossClientKey}"/>';
     function requestPay() {
       <c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.id == product.userId}">
       alert('본인 매물은 구매할 수 없습니다.'); return;
       </c:if>
-      if (!IMP_CODE || IMP_CODE.indexOf('YOUR_') === 0) {
-        alert('결제 키(portone.imp.code)가 아직 설정되지 않았습니다.\ndb.properties에 포트원 가맹점 코드를 입력하세요.');
-        return;
-      }
-      var IMP = window.IMP;
-      IMP.init(IMP_CODE);
-      IMP.request_pay({
-        pg: 'kakaopay',                       // 테스트 채널 (포트원 대시보드 설정에 맞춰 변경)
-        merchant_uid: 'order_${product.id}_' + Date.now(),
-        name: '<c:out value="${product.title}"/>',
-        amount: ${product.price}
-      }, function (rsp) {
-        if (!rsp.success) { alert('결제 취소/실패: ' + (rsp.error_msg || '')); return; }
-        // 서버 검증 (금액 위변조 방지)
-        fetch('${pageContext.request.contextPath}/order/verify', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: 'imp_uid=' + encodeURIComponent(rsp.imp_uid) + '&productId=${product.id}'
-        }).then(function (r) { return r.json(); }).then(function (data) {
-          if (data.success) { alert('결제 완료! 거래가 성사되었습니다.'); location.reload(); }
-          else { alert('결제 검증 실패: ' + (data.message || '')); }
-        });
+      <c:if test="${empty sessionScope.loginUser}">
+      location.href = '${pageContext.request.contextPath}/user/login'; return;
+      </c:if>
+      var base = location.origin + '${pageContext.request.contextPath}';
+      TossPayments(TOSS_KEY).requestPayment('카드', {
+        amount: ${product.price},
+        orderId: 'order_${product.id}_' + Date.now(),
+        orderName: '<c:out value="${product.title}"/>',
+        successUrl: base + '/order/success',   // → 서버가 confirm API로 승인
+        failUrl: base + '/order/fail'
+      }).catch(function (err) {
+        if (err.code !== 'USER_CANCEL') alert('결제 오류: ' + (err.message || ''));
       });
     }
+    // 결제 결과 메시지 (/order/success|fail 리다이렉트 파라미터)
+    (function () {
+      var msg = new URLSearchParams(location.search).get('payMsg');
+      if (msg) alert(msg);
+    })();
   </script>
 
   </div>

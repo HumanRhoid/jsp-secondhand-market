@@ -100,14 +100,9 @@
       <p class="sub">계속하려면 아래에서 선택하세요</p>
 
       <div class="btn-group">
-<<<<<<< HEAD
         <button type="button" class="btn btn-primary" onclick="location.href='join.jsp'">회원가입</button>
         <button type="button" class="btn btn-secondary" onclick="location.href='login.jsp'">로그인</button>
         <button type="button" class="btn btn-secondary" onclick="location.href='<%= request.getContextPath() %>/product/'">로그인 없이 둘러보기</button>
-=======
-        <button type="button" class="btn btn-primary">회원가입</button>
-        <button type="button" class="btn btn-secondary">로그인</button>
->>>>>>> origin/main
       </div>
     </div>
   </div>

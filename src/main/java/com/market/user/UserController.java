@@ -1,6 +1,5 @@
 package com.market.user;
 
-<<<<<<< HEAD
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -10,15 +9,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-=======
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
->>>>>>> origin/main
 
 @WebServlet("/user/*")
 public class UserController extends HttpServlet {
 
-<<<<<<< HEAD
     private static final long serialVersionUID = 1L;
 
     private final UserDAO userDAO = new UserDAO();
@@ -98,6 +92,4 @@ public class UserController extends HttpServlet {
         req.getSession().setAttribute("loginUser", loginUser); // 세션 정보 갱신
         resp.sendRedirect(req.getContextPath() + "/user/profile");
     }
-=======
->>>>>>> origin/main
 }

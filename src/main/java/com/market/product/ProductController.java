@@ -1,6 +1,5 @@
 package com.market.product;
 
-<<<<<<< HEAD
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,15 +14,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.market.common.RedisManager;
 import com.market.user.UserDAO;
 import com.market.user.UserDTO;
-=======
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
->>>>>>> origin/main
 
 @WebServlet("/product/*")
 public class ProductController extends HttpServlet {
 
-<<<<<<< HEAD
     private static final long serialVersionUID = 1L;
 
     private final ProductDAO productDAO = new ProductDAO();
@@ -149,6 +143,4 @@ public class ProductController extends HttpServlet {
             return 0;
         }
     }
-=======
->>>>>>> origin/main
 }

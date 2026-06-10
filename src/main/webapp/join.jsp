@@ -164,7 +164,6 @@
     </header>
 
     <!-- form -->
-<<<<<<< HEAD
     <%-- 가입 실패 메시지 (UserController에서 전달) --%>
     <% if (request.getAttribute("error") != null) { %>
       <div style="width:342px; margin:0 auto 12px; color:#e03131; font-size:14px;"><%= request.getAttribute("error") %></div>
@@ -178,14 +177,6 @@
         <label class="label" for="nickname">이름</label>
         <div class="input-wrap">
           <input class="input" type="text" id="nickname" name="nickname"
-=======
-    <form class="form" onsubmit="event.preventDefault();">
-      <!-- 이름 -->
-      <div class="field">
-        <label class="label" for="name">이름</label>
-        <div class="input-wrap">
-          <input class="input" type="text" id="name" name="name"
->>>>>>> origin/main
                  placeholder="홍길동" autocomplete="name">
         </div>
       </div>
@@ -261,17 +252,12 @@
 
     <!-- footer -->
     <div class="footer-prompt">
-<<<<<<< HEAD
       이미 계정이 있으신가요?<a class="link-inline" href="login.jsp">로그인</a>
-=======
-      이미 계정이 있으신가요?<a class="link-inline" href="#">로그인</a>
->>>>>>> origin/main
     </div>
 
   </div>
 
   <script>
-<<<<<<< HEAD
     // 가입 유효성 검사: 빈 값, 비밀번호 확인 일치
     function checkJoin(f) {
       if (f.nickname.value.trim() === "") { alert("이름을 입력하세요."); f.nickname.focus(); return false; }
@@ -282,8 +268,6 @@
       return true;
     }
 
-=======
->>>>>>> origin/main
     const eyeOpen = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
     const eyeOff  = '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a19.77 19.77 0 0 1 5.17-5.94"></path><path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a19.86 19.86 0 0 1-3.17 4.19"></path><line x1="1" y1="1" x2="23" y2="23"></line><path d="M14.12 14.12A3 3 0 1 1 9.88 9.88"></path>';
 

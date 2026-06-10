@@ -46,17 +46,17 @@
     padding: 0 16px;
   }
   .topbar-action {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 9999px;
-    color: #000;
+    color: #525252;
     text-decoration: none;
   }
-  .topbar-action svg { width: 24px; height: 24px; }
+  .topbar-action svg { width: 20px; height: 20px; }
   .search-pill {
     flex: 1;
     height: 36px;
@@ -86,27 +86,33 @@
   }
   .search-pill .search-input::placeholder { color: #a3a3a3; }
 
-  /* 카테고리 칩 */
+  /* 카테고리 칩 (가로 스크롤, 스크롤바 숨김) */
   .cat-row {
     width: 342px;
-    margin: 12px auto 0;
+    margin: 16px auto 0;
     display: flex;
     gap: 8px;
     overflow-x: auto;
-    padding-bottom: 4px;
+    scrollbar-width: none;       /* Firefox */
   }
+  .cat-row::-webkit-scrollbar { display: none; } /* Chrome/Safari */
   .cat-chip {
     flex-shrink: 0;
-    padding: 6px 14px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 14px;
     border-radius: 9999px;
     border: 1px solid #e5e5e5;
-    background: #fff;
+    background: #ffffff;
     color: #525252;
     font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
     text-decoration: none;
     white-space: nowrap;
   }
-  .cat-chip.active { background: #ff6f0f; color: #fff; border-color: #ff6f0f; }
+  .cat-chip.active { background: #ff6f0f; color: #ffffff; border-color: #ff6f0f; }
 
   /* 인기 매물 스트립 (Redis 랭킹) */
   .popular {

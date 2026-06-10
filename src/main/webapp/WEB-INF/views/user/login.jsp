@@ -205,12 +205,17 @@
       <button type="submit" class="btn">로그인</button>
     </form>
 
-    <!-- SNS 로그인 (카카오/네이버 OAuth) -->
+    <!-- SNS 로그인 (카카오/네이버 OAuth) — 기본 버튼(.btn)과 동일 규격: 48px pill, 14px/500 -->
+    <div style="margin-top:20px; display:flex; align-items:center; gap:12px;">
+      <span style="flex:1; height:1px; background:#e5e5e5;"></span>
+      <span style="font-size:12px; color:#a3a3a3;">또는</span>
+      <span style="flex:1; height:1px; background:#e5e5e5;"></span>
+    </div>
     <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px;">
       <a href="<%= request.getContextPath() %>/auth/kakao"
-         style="height:44px; border-radius:9999px; background:#FEE500; color:#191919; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:14px; font-weight:600;">카카오로 시작하기</a>
+         style="width:100%; height:48px; border-radius:9999px; background:#FEE500; color:#191919; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; font-size:14px; font-weight:500;">카카오로 시작하기</a>
       <a href="<%= request.getContextPath() %>/auth/naver"
-         style="height:44px; border-radius:9999px; background:#03C75A; color:#fff; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:14px; font-weight:600;">네이버로 시작하기</a>
+         style="width:100%; height:48px; border-radius:9999px; background:#03C75A; color:#ffffff; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; font-size:14px; font-weight:500;">네이버로 시작하기</a>
     </div>
 
     <!-- footer -->

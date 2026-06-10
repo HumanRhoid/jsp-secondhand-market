@@ -28,14 +28,14 @@ html, body {
 	-webkit-font-smoothing: antialiased;
 }
 
-/* 모바일 프레임 */
+/* 모바일 프레임 — 필드(카테고리/거래위치) 추가로 내용에 맞춰 늘어나도록 변경 */
 .frame {
 	width: 390px;
-	height: 844px;
+	min-height: 844px;
 	background: #ffffff;
 	position: relative;
-	overflow: hidden;
 	margin: 40px auto;
+	padding-bottom: 110px; /* 하단 등록 버튼(action-bar)과 겹침 방지 */
 }
 
 /* 상단바 */
@@ -83,11 +83,11 @@ html, body {
 	pointer-events: none;
 }
 
-/* 사진 업로드 영역 */
+/* 사진 업로드 영역 (일반 흐름 — 프레임이 내용만큼 늘어남) */
 .photo-upload {
-	position: absolute;
-	top: 80px;
-	left: 24px;
+	position: relative;
+	display: block;
+	margin: 80px auto 0; /* 상단바(56) + 24 여백 */
 	width: 342px;
 	height: 200px;
 	border-radius: 12px;
@@ -159,11 +159,9 @@ html, body {
 	outline-offset: -2px;
 }
 
-/* 폼 */
+/* 폼 (일반 흐름) */
 .form {
-	position: absolute;
-	top: 304px;
-	left: 24px;
+	margin: 24px auto 0;
 	width: 342px;
 	display: flex;
 	flex-direction: column;
@@ -206,6 +204,28 @@ html, body {
 
 .input::placeholder {
 	color: #a3a3a3;
+}
+
+/* 드롭다운(카테고리) — .input과 동일 규격의 pill */
+.select {
+	width: 100%;
+	height: 44px;
+	padding: 8px 16px;
+	border-radius: 9999px;
+	border: 1px solid #e5e5e5;
+	background: #ffffff;
+	color: #000000;
+	font-family: inherit;
+	font-size: 16px;
+	outline: none;
+}
+
+/* 거래 위치 안내줄 */
+.loc-line {
+	font-size: 13px;
+	color: #a3a3a3;
+	padding-left: 8px;
+	line-height: 20px;
 }
 
 .input.has-suffix {
@@ -339,7 +359,7 @@ html, body {
 				<div class="field">
 					<label class="label" for="category">카테고리</label>
 					<div class="input-wrap">
-						<select class="input" id="category" name="category" style="appearance:auto;">
+						<select class="select" id="category" name="category">
 							<option value="">선택 안 함</option>
 							<c:forEach var="cat" items="${categories}">
 								<option value="${cat.id}"><c:out value="${cat.name}"/></option>
@@ -368,7 +388,7 @@ html, body {
 				<input type="hidden" id="lng" name="lng">
 				<div class="field">
 					<span class="label">거래 위치</span>
-					<span id="locLabel" style="font-size:13px; color:#a3a3a3; padding-left:8px;">위치 확인 중…</span>
+					<span id="locLabel" class="loc-line">위치 확인 중…</span>
 				</div>
 
 			</div>

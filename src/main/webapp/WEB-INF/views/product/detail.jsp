@@ -185,6 +185,46 @@
     width: 22px;
     height: 22px;
   }
+  /* 보조 버튼(장바구니): 주 버튼과 같은 높이/라운드, 테두리형 */
+  .cart-btn {
+    height: 48px;
+    padding: 0 20px;
+    border-radius: 9999px;
+    border: 1px solid #e5e5e5;
+    background: #ffffff;
+    color: #000000;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  /* 본인 매물 관리(수정/삭제) 버튼 */
+  .owner-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+  }
+  .owner-btn {
+    flex: 1;
+    height: 40px;
+    border-radius: 9999px;
+    border: 1px solid #e5e5e5;
+    background: #ffffff;
+    color: #000000;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  .owner-btn.danger {
+    border-color: #ffd0d0;
+    color: #e03131;
+  }
   .buy-btn {
     flex: 1;
     height: 48px;
@@ -241,14 +281,12 @@
 
       <%-- 본인 매물일 때만 관리 메뉴 노출 --%>
       <c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.id == product.userId}">
-        <div style="margin-top:20px; display:flex; gap:8px;">
-          <a href="${pageContext.request.contextPath}/product/edit?id=${product.id}"
-             style="flex:1; height:40px; border-radius:9999px; border:1px solid #d4d4d4; background:#fff; color:#000; display:flex; align-items:center; justify-content:center; text-decoration:none;">수정</a>
+        <div class="owner-actions">
+          <a class="owner-btn" href="${pageContext.request.contextPath}/product/edit?id=${product.id}">수정</a>
           <form method="post" action="${pageContext.request.contextPath}/product/delete"
                 onsubmit="return confirm('정말 삭제하시겠습니까?');" style="flex:1;">
             <input type="hidden" name="id" value="${product.id}">
-            <button type="submit"
-                    style="width:100%; height:40px; border-radius:9999px; border:1px solid #e03131; background:#fff; color:#e03131; cursor:pointer;">삭제</button>
+            <button type="submit" class="owner-btn danger">삭제</button>
           </form>
         </div>
       </c:if>
@@ -258,9 +296,9 @@
     <div class="action-bar" style="gap:8px;">
       <form method="post" action="${pageContext.request.contextPath}/cart/add" style="flex:0 0 auto;">
         <input type="hidden" name="id" value="${product.id}">
-        <button type="submit" style="height:48px; padding:0 18px; border-radius:9999px; border:1px solid #d4d4d4; background:#fff; cursor:pointer;">장바구니</button>
+        <button type="submit" class="cart-btn">장바구니</button>
       </form>
-      <button class="buy-btn" type="button" style="flex:1;" onclick="requestPay()">구매하기</button>
+      <button class="buy-btn" type="button" onclick="requestPay()">구매하기</button>
     </div>
 
   <%-- 토스페이먼츠 결제 (테스트 키 — 실결제 없음). 성공 시 /order/success에서 서버 승인(confirm) --%>

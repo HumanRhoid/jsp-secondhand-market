@@ -109,6 +109,16 @@ public class ProductDAO {
         }
     }
 
+    // 상품 사진 전체 삭제 (수정 시 새 사진으로 교체할 때)
+    public void deleteImages(long productId) throws SQLException {
+        String sql = "DELETE FROM product_images WHERE product_id = ?";
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setLong(1, productId);
+            ps.executeUpdate();
+        }
+    }
+
     // 상품 사진 경로 목록 (등록 순)
     public List<String> findImageUrls(long productId) throws SQLException {
         String sql = "SELECT image_url FROM product_images WHERE product_id = ? ORDER BY id";

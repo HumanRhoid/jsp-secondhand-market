@@ -39,6 +39,10 @@
       <c:if test="${not empty errorMessage}">
         <div class="error-msg"><c:out value="${errorMessage}"/></div>
       </c:if>
+      <%-- SNS 키 미설정 안내 (/auth/* 가드에서 리다이렉트) --%>
+      <c:if test="${not empty param.snsMsg}">
+        <div class="error-msg"><c:out value="${param.snsMsg}"/></div>
+      </c:if>
 
       <div class="field">
         <label class="label" for="email">이메일</label>

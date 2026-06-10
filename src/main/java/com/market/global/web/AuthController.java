@@ -45,8 +45,26 @@ public class AuthController extends HttpServlet {
         }
     }
 
+    /** API 키가 아직 placeholder(YOUR_...)인지 검사 */
+    private boolean keyMissing(String key) {
+        return key == null || key.isBlank() || key.startsWith("YOUR_");
+    }
+
+    /** 키 미설정 시 외부 OAuth로 보내지 않고 로그인 화면에 안내 메시지로 복귀 */
+    private void rejectNoKey(HttpServletRequest req, HttpServletResponse resp, String providerName)
+            throws IOException {
+        String msg = URLEncoder.encode(
+                providerName + " 로그인 키가 아직 설정되지 않았습니다. db.properties에 API 키를 입력하세요.",
+                StandardCharsets.UTF_8);
+        resp.sendRedirect(req.getContextPath() + "/user/login?snsMsg=" + msg);
+    }
+
     // ── 카카오 ──
     private void redirectKakao(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if (keyMissing(AppConfig.get("kakao.rest.key"))) {
+            rejectNoKey(req, resp, "카카오");
+            return;
+        }
         String url = "https://kauth.kakao.com/oauth/authorize?response_type=code"
                 + "&client_id=" + AppConfig.get("kakao.rest.key")
                 + "&redirect_uri=" + enc(AppConfig.get("oauth.base.url") + "/auth/kakao/callback");
@@ -75,6 +93,10 @@ public class AuthController extends HttpServlet {
 
     // ── 네이버 ──
     private void redirectNaver(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if (keyMissing(AppConfig.get("naver.client.id"))) {
+            rejectNoKey(req, resp, "네이버");
+            return;
+        }
         String state = UUID.randomUUID().toString();
         req.getSession().setAttribute("naverState", state); // CSRF 방지
         String url = "https://nid.naver.com/oauth2.0/authorize?response_type=code"

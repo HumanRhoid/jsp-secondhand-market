@@ -116,8 +116,8 @@ public class ProductService {
         }
     }
 
-    /** 상품 수정. 소유자가 아니면 P002. form에는 id와 수정할 필드들이 담긴다. */
-    public void update(long loginUserId, ProductDTO form) {
+    /** 상품 수정. 소유자가 아니면 P002. 새 사진(newPhotos)이 있으면 대표+갤러리(product_images)를 통째로 교체한다. */
+    public void update(long loginUserId, ProductDTO form, List<String> newPhotos) {
         ValidationUtil.validateRequired(form.getTitle(), "title");
         ValidationUtil.validatePositive(form.getPrice(), "price");
         try {
@@ -126,9 +126,16 @@ public class ProductService {
             product.setDescription(form.getDescription());
             product.setPrice(form.getPrice());
             product.setStatus(form.getStatus());
-            product.setThumbnail(form.getThumbnail());
+            if (newPhotos != null && !newPhotos.isEmpty()) {
+                product.setThumbnail(newPhotos.get(0));        // 첫 장을 새 대표로
+                productDAO.deleteImages(form.getId());          // 기존 갤러리 비우고
+                productDAO.insertImages(form.getId(), newPhotos); // 새 사진으로 교체
+            } else {
+                product.setThumbnail(form.getThumbnail());      // 사진 미첨부 → 기존 유지
+            }
             productDAO.update(product);
-            log.info("상품 수정: productId={}, userId={}", form.getId(), loginUserId);
+            log.info("상품 수정: productId={}, userId={}, 새사진 {}장",
+                    form.getId(), loginUserId, newPhotos == null ? 0 : newPhotos.size());
         } catch (SQLException e) {
             throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
         }

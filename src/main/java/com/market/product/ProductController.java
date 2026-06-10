@@ -153,9 +153,9 @@ public class ProductController extends HttpServlet {
         form.setPrice((int) parseLong(req.getParameter("price")));
         form.setStatus(req.getParameter("status"));
         List<String> newPhotos = savePhotos(req);
-        // 새 사진을 올렸으면 대표 사진 교체, 아니면 기존 경로(hidden 필드 currentThumbnail) 유지
-        form.setThumbnail(!newPhotos.isEmpty() ? newPhotos.get(0) : req.getParameter("currentThumbnail"));
-        productService.update(loginUser.getId(), form);
+        // 사진 미첨부 시 유지할 기존 대표 경로 (새 사진 처리는 Service가 담당)
+        form.setThumbnail(req.getParameter("currentThumbnail"));
+        productService.update(loginUser.getId(), form, newPhotos);
         resp.sendRedirect(req.getContextPath() + "/product/detail?id=" + form.getId());
     }
 

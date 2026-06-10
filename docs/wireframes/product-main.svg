@@ -1,0 +1,106 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect id="frame" x="0.5" y="0.5" width="389" height="843" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+
+  <!-- topbar: 검색 pill + 동네생활/장바구니/프로필 -->
+  <g id="topbar">
+    <line x1="1" y1="56.5" x2="389" y2="56.5" stroke="#e5e5e5"/>
+    <rect x="16" y="10" width="214" height="36" rx="18" fill="#fafafa"/>
+    <g stroke="#737373" stroke-width="1.8" fill="none">
+      <circle cx="33" cy="27" r="5.5"/>
+      <line x1="37.5" y1="31.5" x2="42" y2="36"/>
+    </g>
+    <text x="50" y="33" font-size="14" fill="#a3a3a3">찾는 물건을 검색하세요</text>
+    <g id="icon-board" stroke="#525252" stroke-width="1.8" fill="none">
+      <path d="M260 21h-16a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10l4 4v-4h2a2 2 0 0 0 2-2V23a2 2 0 0 0-2-2z"/>
+    </g>
+    <g id="icon-cart" stroke="#525252" stroke-width="1.8" fill="none">
+      <circle cx="293" cy="35" r="1.6"/><circle cx="303" cy="35" r="1.6"/>
+      <path d="M287 19h3l2.4 11a1.8 1.8 0 0 0 1.8 1.4h7.6a1.8 1.8 0 0 0 1.8-1.4l1.8-7h-15"/>
+    </g>
+    <g id="icon-profile" stroke="#525252" stroke-width="1.8" fill="none">
+      <circle cx="346" cy="24" r="4"/>
+      <path d="M339 37v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/>
+    </g>
+  </g>
+
+  <!-- 카테고리 칩 -->
+  <g id="cat-chips" font-size="13" font-weight="500">
+    <rect x="24" y="72" width="48" height="32" rx="16" fill="#000000"/>
+    <text x="48" y="92" text-anchor="middle" fill="#ffffff">전체</text>
+    <rect x="80.5" y="72.5" width="84" height="31" rx="15.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="122" y="92" text-anchor="middle" fill="#525252">📍 내 주변</text>
+    <rect x="172.5" y="72.5" width="52" height="31" rx="15.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="198" y="92" text-anchor="middle" fill="#525252">도서</text>
+    <rect x="232.5" y="72.5" width="110" height="31" rx="15.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="287" y="92" text-anchor="middle" fill="#525252">가구/인테리어</text>
+    <rect x="350.5" y="72.5" width="52" height="31" rx="15.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="376" y="92" text-anchor="middle" fill="#525252">기타</text>
+  </g>
+
+  <!-- 인기 매물 (Redis TOP 4) -->
+  <g id="popular">
+    <text x="24" y="135" font-family="'SF Pro Rounded', system-ui, sans-serif" font-size="15" font-weight="600" fill="#000000">지금 인기</text>
+    <g font-size="12">
+      <rect x="24.5" y="144.5" width="77" height="49" rx="12" fill="#fafafa" stroke="#e5e5e5"/>
+      <text x="33" y="163" fill="#000000" font-weight="500">아이폰 15</text>
+      <text x="33" y="180" fill="#000000" font-weight="700">800,000원</text>
+      <rect x="112.5" y="144.5" width="77" height="49" rx="12" fill="#fafafa" stroke="#e5e5e5"/>
+      <text x="121" y="163" fill="#000000" font-weight="500">맥북 프로</text>
+      <text x="121" y="180" fill="#000000" font-weight="700">1,500,000…</text>
+      <rect x="200.5" y="144.5" width="77" height="49" rx="12" fill="#fafafa" stroke="#e5e5e5"/>
+      <text x="209" y="163" fill="#000000" font-weight="500">캠핑 의자</text>
+      <text x="209" y="180" fill="#000000" font-weight="700">25,000원</text>
+      <rect x="288.5" y="144.5" width="77" height="49" rx="12" fill="#fafafa" stroke="#e5e5e5"/>
+      <text x="297" y="163" fill="#000000" font-weight="500">스탠드 조명</text>
+      <text x="297" y="180" fill="#000000" font-weight="700">18,000원</text>
+    </g>
+  </g>
+
+  <!-- 매물 그리드 (2열) -->
+  <g id="grid">
+    <!-- card 1 -->
+    <g id="card-1">
+      <rect x="24.5" y="218.5" width="162" height="162" rx="12" fill="#fafafa" stroke="#e5e5e5"/>
+      <line x1="24.5" y1="218.5" x2="186.5" y2="380.5" stroke="#e5e5e5"/>
+      <line x1="186.5" y1="218.5" x2="24.5" y2="380.5" stroke="#e5e5e5"/>
+      <text x="28" y="405" font-size="16" font-weight="500" fill="#000000">아이폰 15</text>
+      <text x="28" y="426" font-size="15" font-weight="700" fill="#000000">800,000원</text>
+      <text x="28" y="446" font-size="14" fill="#737373">거의 새 제품입니다</text>
+    </g>
+    <!-- card 2 -->
+    <g id="card-2">
+      <rect x="203.5" y="218.5" width="162" height="162" rx="12" fill="#fafafa" stroke="#e5e5e5"/>
+      <line x1="203.5" y1="218.5" x2="365.5" y2="380.5" stroke="#e5e5e5"/>
+      <line x1="365.5" y1="218.5" x2="203.5" y2="380.5" stroke="#e5e5e5"/>
+      <text x="207" y="405" font-size="16" font-weight="500" fill="#000000">맥북 프로 14</text>
+      <text x="207" y="426" font-size="15" font-weight="700" fill="#000000">1,500,000원</text>
+      <text x="207" y="446" font-size="14" fill="#737373">애플케어 포함</text>
+      <text x="207" y="466" font-size="12" font-weight="500" fill="#525252">예약중</text>
+    </g>
+    <!-- card 3 -->
+    <g id="card-3">
+      <rect x="24.5" y="500.5" width="162" height="162" rx="12" fill="#fafafa" stroke="#e5e5e5"/>
+      <line x1="24.5" y1="500.5" x2="186.5" y2="662.5" stroke="#e5e5e5"/>
+      <line x1="186.5" y1="500.5" x2="24.5" y2="662.5" stroke="#e5e5e5"/>
+      <text x="28" y="687" font-size="16" font-weight="500" fill="#000000">캠핑 의자</text>
+      <text x="28" y="708" font-size="15" font-weight="700" fill="#000000">25,000원</text>
+      <text x="28" y="728" font-size="14" fill="#737373">두 개 일괄 판매</text>
+    </g>
+    <!-- card 4 -->
+    <g id="card-4">
+      <rect x="203.5" y="500.5" width="162" height="162" rx="12" fill="#fafafa" stroke="#e5e5e5"/>
+      <line x1="203.5" y1="500.5" x2="365.5" y2="662.5" stroke="#e5e5e5"/>
+      <line x1="365.5" y1="500.5" x2="203.5" y2="662.5" stroke="#e5e5e5"/>
+      <text x="207" y="687" font-size="16" font-weight="500" fill="#000000">스탠드 조명</text>
+      <text x="207" y="708" font-size="15" font-weight="700" fill="#000000">18,000원</text>
+      <text x="207" y="728" font-size="14" fill="#737373">사용감 적음</text>
+    </g>
+  </g>
+
+  <!-- 판매하기 FAB -->
+  <g id="fab">
+    <circle cx="350" cy="784" r="28" fill="#000000"/>
+    <line x1="350" y1="772" x2="350" y2="796" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="338" y1="784" x2="362" y2="784" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>

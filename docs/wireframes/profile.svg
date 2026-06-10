@@ -1,0 +1,44 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect id="frame" x="0.5" y="0.5" width="389" height="843" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+
+  <!-- topbar -->
+  <g id="topbar">
+    <line x1="1" y1="56.5" x2="389" y2="56.5" stroke="#e5e5e5"/>
+    <path d="M34 20l-8 8 8 8" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="195" y="33" text-anchor="middle" font-size="16" font-weight="500" fill="#000000">내 프로필</text>
+  </g>
+
+  <!-- 프로필 헤드 -->
+  <g id="profile-head">
+    <circle cx="195" cy="136" r="47.5" fill="#fafafa" stroke="#e5e5e5"/>
+    <g stroke="#d4d4d4" stroke-width="2" fill="none">
+      <circle cx="195" cy="124" r="14"/>
+      <path d="M167 168c4-14 14-20 28-20s24 6 28 20"/>
+    </g>
+    <text x="195" y="212" text-anchor="middle" font-family="'SF Pro Rounded', system-ui, sans-serif" font-size="20" font-weight="600" fill="#000000">민호</text>
+    <rect x="135.5" y="228.5" width="119" height="25" rx="12.5" fill="#fafafa" stroke="#e5e5e5"/>
+    <text x="195" y="245" text-anchor="middle" font-size="13" font-weight="500" fill="#525252">매너온도 36.5℃</text>
+  </g>
+
+  <!-- 정보 -->
+  <g id="info">
+    <text x="28" y="308" font-size="14" fill="#737373">이메일</text>
+    <text x="362" y="308" text-anchor="end" font-size="14" font-weight="500" fill="#000000">test@test.com</text>
+    <line x1="28" y1="320.5" x2="362" y2="320.5" stroke="#e5e5e5"/>
+    <text x="28" y="352" font-size="14" fill="#737373">지역</text>
+    <text x="362" y="352" text-anchor="end" font-size="14" font-weight="500" fill="#000000">서울</text>
+    <line x1="28" y1="364.5" x2="362" y2="364.5" stroke="#e5e5e5"/>
+  </g>
+
+  <!-- 액션 -->
+  <g id="actions">
+    <rect x="24" y="388" width="342" height="48" rx="24" fill="#000000"/>
+    <text x="195" y="417" text-anchor="middle" font-size="14" font-weight="500" fill="#ffffff">프로필 수정</text>
+    <rect x="24.5" y="448.5" width="341" height="47" rx="23.5" fill="#ffffff" stroke="#d4d4d4"/>
+    <text x="195" y="477" text-anchor="middle" font-size="14" font-weight="500" fill="#000000">매물 둘러보기</text>
+    <rect x="24.5" y="508.5" width="341" height="47" rx="23.5" fill="#ffffff" stroke="#d4d4d4"/>
+    <text x="195" y="537" text-anchor="middle" font-size="14" font-weight="500" fill="#000000">로그아웃</text>
+    <rect x="24.5" y="568.5" width="341" height="47" rx="23.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="195" y="597" text-anchor="middle" font-size="14" font-weight="500" fill="#a3a3a3">회원 탈퇴</text>
+  </g>
+</svg>

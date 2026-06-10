@@ -1,0 +1,62 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect id="frame" x="0.5" y="0.5" width="389" height="843" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+
+  <!-- hero -->
+  <g id="hero">
+    <text x="24" y="82"  font-family="'SF Pro Rounded', system-ui, sans-serif" font-size="36" font-weight="500" fill="#000000">계정을</text>
+    <text x="24" y="122" font-family="'SF Pro Rounded', system-ui, sans-serif" font-size="36" font-weight="500" fill="#000000">만들어보세요</text>
+  </g>
+
+  <!-- 이름 -->
+  <g id="field-name">
+    <text x="32" y="172" font-size="14" font-weight="500" fill="#000000">이름</text>
+    <rect x="24.5" y="188.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="215" font-size="16" fill="#a3a3a3">홍길동</text>
+  </g>
+
+  <!-- 이메일 -->
+  <g id="field-email">
+    <text x="32" y="260" font-size="14" font-weight="500" fill="#000000">이메일</text>
+    <rect x="24.5" y="276.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="303" font-size="16" fill="#a3a3a3">name@example.com</text>
+  </g>
+
+  <!-- 지역 (select) -->
+  <g id="field-region">
+    <text x="32" y="348" font-size="14" font-weight="500" fill="#000000">지역</text>
+    <rect x="24.5" y="364.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="391" font-size="16" fill="#a3a3a3">지역을 선택하세요</text>
+    <path d="M344 382l6 6 6-6" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 비밀번호 -->
+  <g id="field-password">
+    <text x="32" y="436" font-size="14" font-weight="500" fill="#000000">비밀번호</text>
+    <rect x="24.5" y="452.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="479" font-size="16" fill="#a3a3a3">••••••••</text>
+    <g stroke="#737373" stroke-width="1.6" fill="none">
+      <path d="M331 474c3-5.4 5.7-7.5 9-7.5s6 2.1 9 7.5c-3 5.4-5.7 7.5-9 7.5s-6-2.1-9-7.5z"/>
+      <circle cx="340" cy="474" r="2.6"/>
+    </g>
+  </g>
+
+  <!-- 비밀번호 확인 -->
+  <g id="field-confirm">
+    <text x="32" y="524" font-size="14" font-weight="500" fill="#000000">비밀번호 확인</text>
+    <rect x="24.5" y="540.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="567" font-size="16" fill="#a3a3a3">••••••••</text>
+    <g stroke="#737373" stroke-width="1.6" fill="none">
+      <path d="M331 562c3-5.4 5.7-7.5 9-7.5s6 2.1 9 7.5c-3 5.4-5.7 7.5-9 7.5s-6-2.1-9-7.5z"/>
+      <circle cx="340" cy="562" r="2.6"/>
+    </g>
+  </g>
+
+  <!-- CTA -->
+  <g id="btn-join">
+    <rect x="24" y="608" width="342" height="48" rx="24" fill="#000000"/>
+    <text x="195" y="637" text-anchor="middle" font-size="14" font-weight="500" fill="#ffffff">회원가입</text>
+  </g>
+
+  <!-- footer -->
+  <text id="footer-prompt" x="195" y="806" text-anchor="middle" font-size="14" fill="#737373">이미 계정이 있으신가요? <tspan fill="#000000" font-weight="500" text-decoration="underline">로그인</tspan></text>
+</svg>

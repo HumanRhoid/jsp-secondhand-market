@@ -1,0 +1,29 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect id="frame" x="0.5" y="0.5" width="389" height="843" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+
+  <!-- topbar -->
+  <g id="topbar">
+    <line x1="1" y1="56.5" x2="389" y2="56.5" stroke="#e5e5e5"/>
+    <path d="M34 20l-8 8 8 8" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="195" y="33" text-anchor="middle" font-size="16" font-weight="500" fill="#000000">글쓰기</text>
+  </g>
+
+  <!-- 제목 입력 -->
+  <g id="field-title">
+    <rect x="24.5" y="72.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="99" font-size="16" fill="#a3a3a3">제목</text>
+  </g>
+
+  <!-- 본문 textarea (rounded-lg) -->
+  <g id="field-content">
+    <rect x="24.5" y="131.5" width="341" height="359" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="158" font-size="16" fill="#a3a3a3">이웃과 나누고 싶은 이야기를 적어보세요</text>
+  </g>
+
+  <!-- 하단 등록 버튼 -->
+  <g id="action-bar">
+    <line x1="1" y1="764.5" x2="389" y2="764.5" stroke="#e5e5e5"/>
+    <rect x="24" y="780" width="342" height="48" rx="24" fill="#000000"/>
+    <text x="195" y="809" text-anchor="middle" font-size="14" font-weight="500" fill="#ffffff">등록</text>
+  </g>
+</svg>

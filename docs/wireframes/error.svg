@@ -1,0 +1,12 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect id="frame" x="0.5" y="0.5" width="389" height="843" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+
+  <text id="headline" x="195" y="366" text-anchor="middle" font-family="'SF Pro Rounded', system-ui, sans-serif" font-size="30" font-weight="500" fill="#000000">문제가 발생했어요</text>
+  <text id="code" x="195" y="393" text-anchor="middle" font-family="ui-monospace, Consolas, monospace" font-size="13" fill="#a3a3a3">P001</text>
+  <text id="sub" x="195" y="419" text-anchor="middle" font-size="16" fill="#737373">존재하지 않는 상품입니다.</text>
+
+  <g id="btn-home">
+    <rect x="24" y="451" width="342" height="48" rx="24" fill="#000000"/>
+    <text x="195" y="480" text-anchor="middle" font-size="14" font-weight="500" fill="#ffffff">홈으로 돌아가기</text>
+  </g>
+</svg>

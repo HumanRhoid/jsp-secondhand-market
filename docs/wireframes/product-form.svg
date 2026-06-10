@@ -1,0 +1,65 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect id="frame" x="0.5" y="0.5" width="389" height="843" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+
+  <!-- topbar -->
+  <g id="topbar">
+    <line x1="1" y1="56.5" x2="389" y2="56.5" stroke="#e5e5e5"/>
+    <path d="M34 20l-8 8 8 8" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="195" y="33" text-anchor="middle" font-size="16" font-weight="500" fill="#000000">상품 등록</text>
+  </g>
+
+  <!-- 사진 업로드 (dashed) -->
+  <g id="photo-upload">
+    <rect x="24.5" y="80.5" width="341" height="199" rx="12" fill="#fafafa" stroke="#d4d4d4" stroke-dasharray="6 4"/>
+    <g stroke="#737373" stroke-width="1.6" fill="none">
+      <path d="M212 168h-6l-3-4.5h-9l-3 4.5h-6a3 3 0 0 0-3 3v16a3 3 0 0 0 3 3h27a3 3 0 0 0 3-3v-16a3 3 0 0 0-3-3z" transform="translate(-3 -22)"/>
+      <circle cx="195" cy="158" r="6"/>
+    </g>
+    <text x="195" y="196" text-anchor="middle" font-size="14" font-weight="500" fill="#525252">사진 추가</text>
+    <text x="195" y="214" text-anchor="middle" font-size="12" fill="#a3a3a3">여러 장 선택 가능 · 첫 장이 대표 사진</text>
+  </g>
+
+  <!-- 제목 -->
+  <g id="field-title">
+    <text x="32" y="316" font-size="14" font-weight="500" fill="#000000">제목</text>
+    <rect x="24.5" y="332.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="359" font-size="16" fill="#a3a3a3">상품명을 입력하세요</text>
+  </g>
+
+  <!-- 카테고리 -->
+  <g id="field-category">
+    <text x="32" y="404" font-size="14" font-weight="500" fill="#000000">카테고리</text>
+    <rect x="24.5" y="420.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="447" font-size="16" fill="#000000">선택 안 함</text>
+    <path d="M344 438l6 6 6-6" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 가격 -->
+  <g id="field-price">
+    <text x="32" y="492" font-size="14" font-weight="500" fill="#000000">가격</text>
+    <rect x="24.5" y="508.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="535" font-size="16" fill="#a3a3a3">0</text>
+    <text x="350" y="535" text-anchor="end" font-size="16" font-weight="500" fill="#525252">원</text>
+  </g>
+
+  <!-- 설명 (rounded-lg textarea) -->
+  <g id="field-description">
+    <text x="32" y="580" font-size="14" font-weight="500" fill="#000000">설명</text>
+    <rect x="24.5" y="596.5" width="341" height="99" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="622" font-size="16" fill="#a3a3a3">상품 상태, 사용 기간, 거래 가능 지역</text>
+    <text x="40" y="646" font-size="16" fill="#a3a3a3">등을 자유롭게 적어주세요</text>
+  </g>
+
+  <!-- 거래 위치 (Geolocation) -->
+  <g id="field-location">
+    <text x="32" y="724" font-size="14" font-weight="500" fill="#000000">거래 위치</text>
+    <text x="32" y="746" font-size="13" fill="#a3a3a3">📍 위치 확인 중…</text>
+  </g>
+
+  <!-- 하단 등록 버튼 -->
+  <g id="action-bar">
+    <line x1="1" y1="764.5" x2="389" y2="764.5" stroke="#e5e5e5"/>
+    <rect x="24" y="780" width="342" height="48" rx="24" fill="#000000"/>
+    <text x="195" y="809" text-anchor="middle" font-size="14" font-weight="500" fill="#ffffff">등록하기</text>
+  </g>
+</svg>

@@ -1,0 +1,61 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif">
+
+  <!-- frame: 흰 캔버스 + hairline -->
+  <rect id="frame" x="0.5" y="0.5" width="389" height="843" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+
+  <!-- hero: display-xl 36/500 SF Pro Rounded -->
+  <g id="hero">
+    <text x="24" y="98"  font-family="'SF Pro Rounded', system-ui, sans-serif" font-size="36" font-weight="500" fill="#000000">안녕하세요,</text>
+    <text x="24" y="138" font-family="'SF Pro Rounded', system-ui, sans-serif" font-size="36" font-weight="500" fill="#000000">로그인하세요</text>
+  </g>
+
+  <!-- field: 이메일 -->
+  <g id="field-email">
+    <text x="32" y="188" font-size="14" font-weight="500" fill="#000000">이메일</text>
+    <rect x="24.5" y="204.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="231" font-size="16" fill="#a3a3a3">name@example.com</text>
+  </g>
+
+  <!-- field: 비밀번호 (우측 eye 토글) -->
+  <g id="field-password">
+    <text x="32" y="276" font-size="14" font-weight="500" fill="#000000">비밀번호</text>
+    <rect x="24.5" y="292.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="319" font-size="16" fill="#a3a3a3">••••••••</text>
+    <g id="icon-eye" stroke="#737373" stroke-width="1.6" fill="none">
+      <path d="M331 314c3-5.4 5.7-7.5 9-7.5s6 2.1 9 7.5c-3 5.4-5.7 7.5-9 7.5s-6-2.1-9-7.5z"/>
+      <circle cx="340" cy="314" r="2.6"/>
+    </g>
+  </g>
+
+  <!-- 비밀번호 찾기 (link-mute, 우측 정렬) -->
+  <text id="link-forgot" x="366" y="357" text-anchor="end" font-size="14" fill="#737373" text-decoration="underline">비밀번호를 잊으셨나요?</text>
+
+  <!-- 로그인 CTA: 검정 pill 48px -->
+  <g id="btn-login">
+    <rect x="24" y="380" width="342" height="48" rx="24" fill="#000000"/>
+    <text x="195" y="409" text-anchor="middle" font-size="14" font-weight="500" fill="#ffffff">로그인</text>
+  </g>
+
+  <!-- footer prompt -->
+  <text id="footer-prompt" x="195" y="462" text-anchor="middle" font-size="14" fill="#737373">계정이 없으신가요? <tspan fill="#000000" font-weight="500" text-decoration="underline">회원가입</tspan></text>
+
+  <!-- or divider -->
+  <g id="or-row">
+    <line x1="24"  y1="690" x2="171" y2="690" stroke="#e5e5e5"/>
+    <text x="195" y="694" text-anchor="middle" font-size="12" fill="#a3a3a3">또는</text>
+    <line x1="219" y1="690" x2="366" y2="690" stroke="#e5e5e5"/>
+  </g>
+
+  <!-- SNS: 흰 hairline pill + 12px 브랜드 도트 (페이지 맨 아래) -->
+  <g id="btn-kakao">
+    <rect x="24.5" y="708.5" width="341" height="47" rx="23.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <circle cx="135" cy="732" r="6" fill="#FEE500"/>
+    <text x="149" y="737" font-size="14" font-weight="500" fill="#000000">카카오로 시작하기</text>
+  </g>
+  <g id="btn-naver">
+    <rect x="24.5" y="764.5" width="341" height="47" rx="23.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <circle cx="135" cy="788" r="6" fill="#03C75A"/>
+    <text x="149" y="793" font-size="14" font-weight="500" fill="#000000">네이버로 시작하기</text>
+  </g>
+
+</svg>

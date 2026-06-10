@@ -1,0 +1,10 @@
+{
+  "theme": "neutral",
+  "fontFamily": "system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif",
+  "flowchart": {
+    "htmlLabels": false,
+    "curve": "linear",
+    "nodeSpacing": 24,
+    "rankSpacing": 56
+  }
+}

@@ -1,0 +1,49 @@
+flowchart TD
+  ROOT("중고거래 플랫폼")
+
+  ROOT --> HOME("시작")
+  ROOT --> AUTH("인증")
+  ROOT --> PROD("상품")
+  ROOT --> ORDER("주문 / 결제")
+  ROOT --> CART("장바구니")
+  ROOT --> BOARD("동네생활")
+  ROOT --> MY("마이페이지")
+
+  HOME --> H1("시작 페이지<br/>/")
+
+  AUTH --> A1("로그인<br/>/user/login")
+  AUTH --> A2("회원가입<br/>/user/join")
+  AUTH --> A3("카카오 OAuth<br/>/auth/kakao")
+  AUTH --> A4("네이버 OAuth<br/>/auth/naver")
+  AUTH --> A5("로그아웃<br/>/user/logout")
+
+  PROD --> P1("둘러보기 · 검색 · 내 주변<br/>/product/")
+  PROD --> P2("상품 상세<br/>/product/detail?id=")
+  PROD --> P3("🔒 상품 등록<br/>/product/form → write")
+  PROD --> P4("🔒 상품 수정<br/>/product/edit → update")
+  PROD --> P5("🔒 상품 삭제<br/>/product/delete")
+
+  ORDER --> O1("토스페이먼츠 결제<br/>상세 → 구매하기")
+  ORDER --> O2("결제 승인<br/>/order/success")
+  ORDER --> O3("결제 실패<br/>/order/fail")
+
+  CART --> C1("장바구니 목록<br/>/cart/")
+  CART --> C2("담기<br/>/cart/add")
+  CART --> C3("빼기<br/>/cart/remove")
+
+  BOARD --> B1("글 목록<br/>/board/")
+  BOARD --> B2("글 보기<br/>/board/view?id=")
+  BOARD --> B3("글쓰기<br/>/board/write")
+
+  MY --> M1("🔒 내 프로필<br/>/user/profile")
+  MY --> M2("🔒 프로필 수정<br/>/user/edit → update")
+  MY --> M3("회원 탈퇴<br/>/user/delete")
+  MY --> M4("에러 페이지<br/>404 · 500")
+
+  classDef root fill:#000000,stroke:#000000,color:#ffffff,font-weight:bold
+  classDef branch fill:#fafafa,stroke:#e5e5e5,color:#000000,font-weight:bold
+  classDef leaf fill:#ffffff,stroke:#e5e5e5,color:#000000
+  class ROOT root
+  class HOME,AUTH,PROD,ORDER,CART,BOARD,MY branch
+  class H1,A1,A2,A3,A4,A5,P1,P2,P3,P4,P5,O1,O2,O3,C1,C2,C3,B1,B2,B3,M1,M2,M3,M4 leaf
+  linkStyle default stroke:#d4d4d4,stroke-width:1px

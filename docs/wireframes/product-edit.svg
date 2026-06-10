@@ -1,0 +1,57 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect id="frame" x="0.5" y="0.5" width="389" height="843" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+
+  <!-- topbar -->
+  <g id="topbar">
+    <line x1="1" y1="56.5" x2="389" y2="56.5" stroke="#e5e5e5"/>
+    <path d="M34 20l-8 8 8 8" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="195" y="33" text-anchor="middle" font-size="16" font-weight="500" fill="#000000">상품 수정</text>
+  </g>
+
+  <!-- 사진 (현재 대표 사진 + 교체 안내) -->
+  <g id="photo-upload">
+    <rect x="24.5" y="80.5" width="341" height="199" rx="12" fill="#fafafa" stroke="#d4d4d4" stroke-dasharray="6 4"/>
+    <rect x="135" y="110" width="120" height="120" rx="10" fill="#ffffff" stroke="#e5e5e5"/>
+    <line x1="135" y1="110" x2="255" y2="230" stroke="#e5e5e5"/>
+    <line x1="255" y1="110" x2="135" y2="230" stroke="#e5e5e5"/>
+    <text x="195" y="256" text-anchor="middle" font-size="12" fill="#a3a3a3">탭하면 사진을 새로 올려 교체합니다</text>
+  </g>
+
+  <!-- 제목 -->
+  <g id="field-title">
+    <text x="32" y="316" font-size="14" font-weight="500" fill="#000000">제목</text>
+    <rect x="24.5" y="332.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="359" font-size="16" fill="#000000">아이폰 15</text>
+  </g>
+
+  <!-- 가격 -->
+  <g id="field-price">
+    <text x="32" y="404" font-size="14" font-weight="500" fill="#000000">가격</text>
+    <rect x="24.5" y="420.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="447" font-size="16" fill="#000000">800000</text>
+    <text x="350" y="447" text-anchor="end" font-size="16" font-weight="500" fill="#525252">원</text>
+  </g>
+
+  <!-- 상태 (select) -->
+  <g id="field-status">
+    <text x="32" y="492" font-size="14" font-weight="500" fill="#000000">상태</text>
+    <rect x="24.5" y="508.5" width="341" height="43" rx="21.5" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="535" font-size="16" fill="#000000">판매중</text>
+    <path d="M344 526l6 6 6-6" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 설명 -->
+  <g id="field-description">
+    <text x="32" y="580" font-size="14" font-weight="500" fill="#000000">설명</text>
+    <rect x="24.5" y="596.5" width="341" height="119" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+    <text x="40" y="622" font-size="16" fill="#000000">거의 새 제품입니다. 풀박스 구성이고</text>
+    <text x="40" y="646" font-size="16" fill="#000000">직거래는 서울 강남 인근에서 가능합니다.</text>
+  </g>
+
+  <!-- 하단 수정 버튼 -->
+  <g id="action-bar">
+    <line x1="1" y1="764.5" x2="389" y2="764.5" stroke="#e5e5e5"/>
+    <rect x="24" y="780" width="342" height="48" rx="24" fill="#000000"/>
+    <text x="195" y="809" text-anchor="middle" font-size="14" font-weight="500" fill="#ffffff">수정하기</text>
+  </g>
+</svg>

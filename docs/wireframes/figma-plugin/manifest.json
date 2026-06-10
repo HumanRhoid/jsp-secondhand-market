@@ -1,0 +1,7 @@
+{
+  "name": "중고마켓 와이어프레임 임포터",
+  "id": "secondhand-wireframes-importer",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": ["figma"]
+}

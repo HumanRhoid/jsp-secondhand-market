@@ -1,0 +1,20 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect id="frame" x="0.5" y="0.5" width="389" height="843" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+
+  <!-- 중앙 스택 -->
+  <text id="headline" x="195" y="320" text-anchor="middle" font-family="'SF Pro Rounded', system-ui, sans-serif" font-size="36" font-weight="500" fill="#000000">환영합니다</text>
+  <text id="sub" x="195" y="351" text-anchor="middle" font-size="16" fill="#737373">계속하려면 아래에서 선택하세요</text>
+
+  <g id="btn-join">
+    <rect x="24" y="390" width="342" height="48" rx="24" fill="#000000"/>
+    <text x="195" y="419" text-anchor="middle" font-size="14" font-weight="500" fill="#ffffff">회원가입</text>
+  </g>
+  <g id="btn-login">
+    <rect x="24.5" y="450.5" width="341" height="47" rx="23.5" fill="#ffffff" stroke="#d4d4d4"/>
+    <text x="195" y="479" text-anchor="middle" font-size="14" font-weight="500" fill="#000000">로그인</text>
+  </g>
+  <g id="btn-browse">
+    <rect x="24.5" y="510.5" width="341" height="47" rx="23.5" fill="#ffffff" stroke="#d4d4d4"/>
+    <text x="195" y="539" text-anchor="middle" font-size="14" font-weight="500" fill="#000000">로그인 없이 둘러보기</text>
+  </g>
+</svg>

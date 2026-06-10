@@ -36,20 +36,6 @@ public class ProductDAO {
         return null;
     }
 
-    // 내 상품 목록
-    public List<ProductDTO> findByUserId(long userId) throws SQLException {
-        String sql = "SELECT * FROM products WHERE user_id = ? AND deleted_at IS NULL ORDER BY created_at DESC";
-        List<ProductDTO> list = new ArrayList<>();
-        try (Connection con = DBManager.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setLong(1, userId);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) list.add(toDTO(rs));
-            }
-        }
-        return list;
-    }
-
     // 상품 등록
     public void insert(ProductDTO product) throws SQLException {
         String sql = "INSERT INTO products (user_id, title, description, price, status, thumbnail) VALUES (?, ?, ?, ?, '판매중', ?)";

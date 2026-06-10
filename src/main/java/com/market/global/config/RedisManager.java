@@ -80,12 +80,4 @@ public class RedisManager {
         }
     }
 
-    /** 연결 상태 확인 (점검용) */
-    public static boolean ping() {
-        try (Jedis jedis = getPool().getResource()) {
-            return "PONG".equalsIgnoreCase(jedis.ping());
-        } catch (Exception e) {
-            return false;
-        }
-    }
 }

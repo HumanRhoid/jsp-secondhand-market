@@ -21,11 +21,21 @@ public class ProductService {
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
     private final ProductDAO productDAO = new ProductDAO();
+    private final CategoryDAO categoryDAO = new CategoryDAO();
 
-    /** 전체 상품 목록 (최신순) */
-    public List<ProductDTO> getProducts() {
+    /** 상품 목록 (최신순). keyword(제목 검색)·categoryId(분류) 선택 필터. */
+    public List<ProductDTO> getProducts(String keyword, Long categoryId) {
         try {
-            return productDAO.findAll();
+            return productDAO.findAll(keyword, categoryId);
+        } catch (SQLException e) {
+            throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
+        }
+    }
+
+    /** 카테고리 전체 (등록 폼·목록 필터용) */
+    public List<CategoryDTO> getCategories() {
+        try {
+            return categoryDAO.findAll();
         } catch (SQLException e) {
             throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
         }

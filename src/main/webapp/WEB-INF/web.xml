@@ -49,6 +49,7 @@
 		<url-pattern>/user/profile</url-pattern>
 		<url-pattern>/user/update</url-pattern>
 		<url-pattern>/user/edit</url-pattern>
+			<url-pattern>/user/delete</url-pattern>
 	</filter-mapping>
 
 	<session-config>

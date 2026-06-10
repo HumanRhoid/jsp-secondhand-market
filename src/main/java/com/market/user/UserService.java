@@ -81,6 +81,16 @@ public class UserService {
         }
     }
 
+    /** 회원 탈퇴. 매물·찜 등은 FK CASCADE로 함께 삭제된다. */
+    public void deleteAccount(long userId) {
+        try {
+            userDAO.delete(userId);
+            log.info("회원 탈퇴: userId={}", userId);
+        } catch (SQLException e) {
+            throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
+        }
+    }
+
     /** id로 회원 조회. 없으면 U002 */
     public UserDTO findById(long id) {
         try {

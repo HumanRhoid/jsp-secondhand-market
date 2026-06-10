@@ -60,6 +60,7 @@ public class UserController extends HttpServlet {
             case "/join"   -> join(req, resp);
             case "/login"  -> login(req, resp);
             case "/update" -> update(req, resp);
+            case "/delete" -> deleteAccount(req, resp);
             default        -> resp.sendRedirect(req.getContextPath() + "/product/");
         }
     }
@@ -108,5 +109,16 @@ public class UserController extends HttpServlet {
                 req.getParameter("profileImage"));
         req.getSession().setAttribute("loginUser", updated); // 세션 정보 갱신
         resp.sendRedirect(req.getContextPath() + "/user/profile");
+    }
+
+    private void deleteAccount(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SessionUser loginUser = SessionUser.current(req);
+        if (loginUser == null) {
+            resp.sendRedirect(req.getContextPath() + "/user/login");
+            return;
+        }
+        userService.deleteAccount(loginUser.getId());
+        req.getSession().invalidate();
+        resp.sendRedirect(req.getContextPath() + "/product/");
     }
 }

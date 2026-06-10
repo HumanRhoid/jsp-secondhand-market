@@ -73,6 +73,16 @@ public class UserDAO {
         }
     }
 
+    // 회원 탈퇴 (하드 삭제). FK ON DELETE CASCADE로 매물·찜 등도 함께 삭제됨
+    public void delete(long id) throws SQLException {
+        String sql = "DELETE FROM users WHERE id = ?";
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            ps.executeUpdate();
+        }
+    }
+
     // ResultSet → UserDTO 변환
     private UserDTO toDTO(ResultSet rs) throws SQLException {
         UserDTO u = new UserDTO();

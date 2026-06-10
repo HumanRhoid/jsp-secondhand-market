@@ -73,11 +73,40 @@
     color: #737373;
     flex-shrink: 0;
   }
-  .search-pill .placeholder {
+  .search-pill .search-input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
     font-size: 14px;
     line-height: 20px;
-    color: #a3a3a3;
+    color: #000;
   }
+  .search-pill .search-input::placeholder { color: #a3a3a3; }
+
+  /* 카테고리 칩 */
+  .cat-row {
+    width: 342px;
+    margin: 12px auto 0;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .cat-chip {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    color: #525252;
+    font-size: 13px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .cat-chip.active { background: #ff6f0f; color: #fff; border-color: #ff6f0f; }
 
   /* 인기 매물 스트립 (Redis 랭킹) */
   .popular {
@@ -226,15 +255,18 @@
 <body>
   <div class="frame">
 
-    <!-- 상단 검색바 -->
+    <!-- 상단 검색바 (실제 검색: GET /product/?q=) -->
     <div class="topbar">
-      <div class="search-pill">
+      <form class="search-pill" method="get" action="${pageContext.request.contextPath}/product/">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="7"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <span class="placeholder">찾는 물건을 검색하세요</span>
-      </div>
+        <input class="search-input" type="text" name="q" value="<c:out value='${q}'/>" placeholder="찾는 물건을 검색하세요">
+        <c:if test="${not empty selectedCategory}">
+          <input type="hidden" name="category" value="${selectedCategory}">
+        </c:if>
+      </form>
 
       <%-- 로그인 상태면 내 프로필, 아니면 로그인으로 --%>
       <c:choose>
@@ -257,6 +289,18 @@
         </c:otherwise>
       </c:choose>
     </div>
+
+    <!-- 카테고리 칩 (선택 시 GET /product/?category=, 검색어 유지) -->
+    <c:if test="${not empty categories}">
+      <div class="cat-row">
+        <a class="cat-chip ${empty selectedCategory ? 'active' : ''}"
+           href="${pageContext.request.contextPath}/product/?${empty q ? '' : 'q='.concat(q)}">전체</a>
+        <c:forEach var="cat" items="${categories}">
+          <a class="cat-chip ${selectedCategory == cat.id ? 'active' : ''}"
+             href="${pageContext.request.contextPath}/product/?category=${cat.id}${empty q ? '' : '&q='.concat(q)}"><c:out value="${cat.name}"/></a>
+        </c:forEach>
+      </div>
+    </c:if>
 
     <!-- 인기 매물 (Redis 조회수 랭킹 TOP 4) -->
     <c:if test="${not empty popular}">

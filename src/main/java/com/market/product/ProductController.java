@@ -44,7 +44,7 @@ public class ProductController extends HttpServlet {
         switch (path) {
             case "/", "/list" -> list(req, resp);
             case "/detail"    -> detail(req, resp);
-            case "/form"      -> req.getRequestDispatcher("/WEB-INF/views/product/form.jsp").forward(req, resp); // LoginCheckFilter가 보호
+            case "/form"      -> formPage(req, resp); // LoginCheckFilter가 보호
             case "/edit"      -> editForm(req, resp); // LoginCheckFilter가 보호
             default           -> resp.sendRedirect(req.getContextPath() + "/product/");
         }
@@ -63,12 +63,28 @@ public class ProductController extends HttpServlet {
         }
     }
 
-    // 상품 목록 + Redis 인기 랭킹 TOP 4
+    // 상품 목록 + 검색(q) + 카테고리 필터(category) + Redis 인기 랭킹 TOP 4
     private void list(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.setAttribute("products", productService.getProducts());
+        String keyword = req.getParameter("q");
+        Long categoryId = null;
+        String cat = req.getParameter("category");
+        if (cat != null && !cat.isBlank()) {
+            categoryId = parseLong(cat);
+        }
+        req.setAttribute("products", productService.getProducts(keyword, categoryId));
+        req.setAttribute("categories", productService.getCategories());
         req.setAttribute("popular", productService.getPopularProducts(4));
+        req.setAttribute("q", keyword);                 // 검색어 유지
+        req.setAttribute("selectedCategory", categoryId); // 선택 카테고리 유지
         req.getRequestDispatcher("/WEB-INF/views/product/main.jsp").forward(req, resp);
+    }
+
+    // 등록 폼 (카테고리 목록 전달)
+    private void formPage(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        req.setAttribute("categories", productService.getCategories());
+        req.getRequestDispatcher("/WEB-INF/views/product/form.jsp").forward(req, resp);
     }
 
     private void detail(HttpServletRequest req, HttpServletResponse resp)
@@ -103,6 +119,7 @@ public class ProductController extends HttpServlet {
         product.setTitle(req.getParameter("title"));
         product.setDescription(req.getParameter("description"));
         product.setPrice((int) parseLong(req.getParameter("price")));
+        product.setCategoryId(parseLong(req.getParameter("category"))); // 0이면 미분류
         List<String> photoPaths = savePhotos(req); // 업로드 사진들 저장 후 경로(/images/...) 목록, 없으면 빈 목록
         try {
             productService.write(loginUser.getId(), product, photoPaths);

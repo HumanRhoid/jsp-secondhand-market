@@ -12,14 +12,29 @@ import java.util.List;
 
 public class ProductDAO {
 
-    // 전체 목록 (삭제 안 된 것만, 최신순)
-    public List<ProductDTO> findAll() throws SQLException {
-        String sql = "SELECT * FROM products WHERE deleted_at IS NULL ORDER BY created_at DESC";
+    // 목록 (삭제 안 된 것만, 최신순) — keyword(제목 검색)·categoryId(분류) 선택 필터
+    public List<ProductDTO> findAll(String keyword, Long categoryId) throws SQLException {
+        StringBuilder sql = new StringBuilder("SELECT * FROM products WHERE deleted_at IS NULL");
+        List<Object> params = new ArrayList<>();
+        if (keyword != null && !keyword.isBlank()) {
+            sql.append(" AND title ILIKE ?");
+            params.add("%" + keyword.trim() + "%");
+        }
+        if (categoryId != null) {
+            sql.append(" AND category_id = ?");
+            params.add(categoryId);
+        }
+        sql.append(" ORDER BY created_at DESC");
+
         List<ProductDTO> list = new ArrayList<>();
         try (Connection con = DBManager.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) list.add(toDTO(rs));
+             PreparedStatement ps = con.prepareStatement(sql.toString())) {
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) list.add(toDTO(rs));
+            }
         }
         return list;
     }
@@ -39,7 +54,7 @@ public class ProductDAO {
 
     // 상품 등록 → 생성된 id 반환 (product_images 적재에 사용)
     public long insert(ProductDTO product) throws SQLException {
-        String sql = "INSERT INTO products (user_id, title, description, price, status, thumbnail) VALUES (?, ?, ?, ?, '판매중', ?)";
+        String sql = "INSERT INTO products (user_id, title, description, price, status, thumbnail, category_id) VALUES (?, ?, ?, ?, '판매중', ?, ?)";
         try (Connection con = DBManager.getConnection();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setLong(1, product.getUserId());
@@ -47,6 +62,11 @@ public class ProductDAO {
             ps.setString(3, product.getDescription());
             ps.setInt(4, product.getPrice());
             ps.setString(5, product.getThumbnail());
+            if (product.getCategoryId() > 0) {
+                ps.setLong(6, product.getCategoryId());
+            } else {
+                ps.setNull(6, java.sql.Types.BIGINT);
+            }
             ps.executeUpdate();
             try (ResultSet keys = ps.getGeneratedKeys()) {
                 if (keys.next()) return keys.getLong(1);

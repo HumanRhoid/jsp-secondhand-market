@@ -110,6 +110,10 @@
       <a class="btn btn-primary" href="${pageContext.request.contextPath}/user/edit">프로필 수정</a>
       <a class="btn btn-line" href="${pageContext.request.contextPath}/product/">매물 둘러보기</a>
       <a class="btn btn-danger" href="${pageContext.request.contextPath}/user/logout">로그아웃</a>
+      <form method="post" action="${pageContext.request.contextPath}/user/delete"
+            onsubmit="return confirm('정말 탈퇴하시겠습니까? 등록한 매물도 함께 삭제됩니다.');">
+        <button type="submit" class="btn btn-line" style="width:100%; color:#a3a3a3;">회원 탈퇴</button>
+      </form>
     </div>
 
   </div>

@@ -336,6 +336,18 @@ html, body {
 				</div>
 
 				<div class="field">
+					<label class="label" for="category">카테고리</label>
+					<div class="input-wrap">
+						<select class="input" id="category" name="category" style="appearance:auto;">
+							<option value="">선택 안 함</option>
+							<c:forEach var="cat" items="${categories}">
+								<option value="${cat.id}"><c:out value="${cat.name}"/></option>
+							</c:forEach>
+						</select>
+					</div>
+				</div>
+
+				<div class="field">
 					<label class="label" for="price">가격</label>
 					<div class="input-wrap">
 						<input class="input has-suffix" type="number" id="price"

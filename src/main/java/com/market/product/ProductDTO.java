@@ -23,6 +23,9 @@ public class ProductDTO implements Serializable {
     private Timestamp updatedAt;
     private Timestamp deletedAt;
     private List<String> images = new ArrayList<>(); // 상세용 전체 사진 경로 목록(product_images)
+    private Double    latitude;   // 매물 좌표 (카카오맵/거리 계산용, 없으면 null)
+    private Double    longitude;
+    private Double    distanceKm; // "내 주변" 조회 시 계산된 거리(km)
 
     public long getId()              { return id; }
     public void setId(long id)       { this.id = id; }
@@ -65,4 +68,13 @@ public class ProductDTO implements Serializable {
 
     public List<String> getImages()                    { return images; }
     public void         setImages(List<String> images) { this.images = images; }
+
+    public Double getLatitude()                  { return latitude; }
+    public void   setLatitude(Double latitude)   { this.latitude = latitude; }
+
+    public Double getLongitude()                 { return longitude; }
+    public void   setLongitude(Double longitude) { this.longitude = longitude; }
+
+    public Double getDistanceKm()                  { return distanceKm; }
+    public void   setDistanceKm(Double distanceKm) { this.distanceKm = distanceKm; }
 }

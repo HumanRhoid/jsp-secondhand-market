@@ -9,3 +9,17 @@ redis.port=6379
 
 # 업로드된 매물 사진을 저장할 외부 폴더 (앱 바깥 → 재배포해도 사진 유지). 슬래시(/) 사용
 upload.dir=C:/Users/계정명/upload
+
+# ── 외부 API 연동 (키 발급 후 채우면 해당 기능 활성화) ──
+# 카카오 개발자(https://developers.kakao.com) — 맵/로그인
+kakao.js.key=YOUR_KAKAO_JAVASCRIPT_KEY
+kakao.rest.key=YOUR_KAKAO_REST_API_KEY
+# 네이버 개발자(https://developers.naver.com) — 네이버 로그인
+naver.client.id=YOUR_NAVER_CLIENT_ID
+naver.client.secret=YOUR_NAVER_CLIENT_SECRET
+# 포트원(https://portone.io) — 결제. imp.code는 가맹점 식별코드(imp로 시작)
+portone.imp.code=YOUR_IMP_CODE
+portone.api.key=YOUR_PORTONE_API_KEY
+portone.api.secret=YOUR_PORTONE_API_SECRET
+# OAuth 콜백 베이스 URL
+oauth.base.url=http://localhost:8080/secondhand

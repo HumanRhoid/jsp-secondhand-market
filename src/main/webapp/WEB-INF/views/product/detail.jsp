@@ -260,8 +260,42 @@
         <input type="hidden" name="id" value="${product.id}">
         <button type="submit" style="height:48px; padding:0 18px; border-radius:9999px; border:1px solid #d4d4d4; background:#fff; cursor:pointer;">장바구니</button>
       </form>
-      <button class="buy-btn" type="button" style="flex:1;" onclick="alert('결제(포트원) 연동은 준비 중입니다.')">구매하기</button>
+      <button class="buy-btn" type="button" style="flex:1;" onclick="requestPay()">구매하기</button>
     </div>
+
+  <%-- 포트원(아임포트) 결제. 키 미설정 시 안내만 표시 --%>
+  <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+  <script>
+    var IMP_CODE = '<c:out value="${impCode}"/>';
+    function requestPay() {
+      <c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.id == product.userId}">
+      alert('본인 매물은 구매할 수 없습니다.'); return;
+      </c:if>
+      if (!IMP_CODE || IMP_CODE.indexOf('YOUR_') === 0) {
+        alert('결제 키(portone.imp.code)가 아직 설정되지 않았습니다.\ndb.properties에 포트원 가맹점 코드를 입력하세요.');
+        return;
+      }
+      var IMP = window.IMP;
+      IMP.init(IMP_CODE);
+      IMP.request_pay({
+        pg: 'kakaopay',                       // 테스트 채널 (포트원 대시보드 설정에 맞춰 변경)
+        merchant_uid: 'order_${product.id}_' + Date.now(),
+        name: '<c:out value="${product.title}"/>',
+        amount: ${product.price}
+      }, function (rsp) {
+        if (!rsp.success) { alert('결제 취소/실패: ' + (rsp.error_msg || '')); return; }
+        // 서버 검증 (금액 위변조 방지)
+        fetch('${pageContext.request.contextPath}/order/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'imp_uid=' + encodeURIComponent(rsp.imp_uid) + '&productId=${product.id}'
+        }).then(function (r) { return r.json(); }).then(function (data) {
+          if (data.success) { alert('결제 완료! 거래가 성사되었습니다.'); location.reload(); }
+          else { alert('결제 검증 실패: ' + (data.message || '')); }
+        });
+      });
+    }
+  </script>
 
   </div>
 </body>

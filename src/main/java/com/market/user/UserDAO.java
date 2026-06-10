@@ -73,6 +73,35 @@ public class UserDAO {
         }
     }
 
+    // SNS 계정으로 가입된 회원 조회 (kakao/naver + 고유 id)
+    public UserDTO findByProvider(String provider, String providerId) throws SQLException {
+        String sql = "SELECT * FROM users WHERE provider = ? AND provider_id = ?";
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, provider);
+            ps.setString(2, providerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return toDTO(rs);
+            }
+        }
+        return null;
+    }
+
+    // SNS 최초 로그인 시 자동 가입
+    public void joinSocial(UserDTO user, String provider, String providerId) throws SQLException {
+        String sql = "INSERT INTO users (nickname, email, password, region, provider, provider_id) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, user.getNickname());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getRegion());
+            ps.setString(5, provider);
+            ps.setString(6, providerId);
+            ps.executeUpdate();
+        }
+    }
+
     // 회원 탈퇴 (하드 삭제). FK ON DELETE CASCADE로 매물·찜 등도 함께 삭제됨
     public void delete(long id) throws SQLException {
         String sql = "DELETE FROM users WHERE id = ?";

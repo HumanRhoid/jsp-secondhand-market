@@ -205,6 +205,14 @@
       <button type="submit" class="btn">로그인</button>
     </form>
 
+    <!-- SNS 로그인 (카카오/네이버 OAuth) -->
+    <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px;">
+      <a href="<%= request.getContextPath() %>/auth/kakao"
+         style="height:44px; border-radius:9999px; background:#FEE500; color:#191919; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:14px; font-weight:600;">카카오로 시작하기</a>
+      <a href="<%= request.getContextPath() %>/auth/naver"
+         style="height:44px; border-radius:9999px; background:#03C75A; color:#fff; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:14px; font-weight:600;">네이버로 시작하기</a>
+    </div>
+
     <!-- footer -->
     <div class="footer-prompt">
       계정이 없으신가요?<a class="link-inline" href="<%= request.getContextPath() %>/user/join">회원가입</a>

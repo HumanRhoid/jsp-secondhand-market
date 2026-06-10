@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -362,6 +363,14 @@ html, body {
 						placeholder="상품 상태, 사용 기간, 거래 가능 지역 등을 자유롭게 적어주세요"></textarea>
 				</div>
 
+				<%-- 거래 위치: Geolocation으로 좌표 수집, 카카오맵 키가 있으면 동네명으로 변환 표시 --%>
+				<input type="hidden" id="lat" name="lat">
+				<input type="hidden" id="lng" name="lng">
+				<div class="field">
+					<span class="label">거래 위치</span>
+					<span id="locLabel" style="font-size:13px; color:#a3a3a3; padding-left:8px;">위치 확인 중…</span>
+				</div>
+
 			</div>
 
 			<!-- 하단 등록 버튼 -->
@@ -392,6 +401,39 @@ html, body {
 			grid.hidden = false;
 			placeholder.hidden = true;
 		}
+	</script>
+
+	<%-- 위치 수집 + 카카오맵 좌표→행정동 변환 (키 미설정 시 좌표만 저장) --%>
+	<c:set var="kakaoKeyReady" value="${not empty kakaoJsKey && !fn:startsWith(kakaoJsKey, 'YOUR_')}"/>
+	<c:if test="${kakaoKeyReady}">
+		<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJsKey}&libraries=services&autoload=false"></script>
+	</c:if>
+	<script>
+		(function () {
+			var label = document.getElementById('locLabel');
+			if (!navigator.geolocation) { label.textContent = '위치 미지원 브라우저'; return; }
+			navigator.geolocation.getCurrentPosition(function (pos) {
+				var lat = pos.coords.latitude, lng = pos.coords.longitude;
+				document.getElementById('lat').value = lat;
+				document.getElementById('lng').value = lng;
+				<c:choose>
+					<c:when test="${kakaoKeyReady}">
+				kakao.maps.load(function () {
+					new kakao.maps.services.Geocoder().coord2RegionCode(lng, lat, function (result, status) {
+						if (status === kakao.maps.services.Status.OK && result.length) {
+							label.textContent = '📍 ' + result[0].address_name; // 좌표 → 행정동 변환(카카오맵)
+						} else {
+							label.textContent = '📍 좌표 저장됨 (' + lat.toFixed(4) + ', ' + lng.toFixed(4) + ')';
+						}
+					});
+				});
+					</c:when>
+					<c:otherwise>
+				label.textContent = '📍 좌표 저장됨 (' + lat.toFixed(4) + ', ' + lng.toFixed(4) + ') — 카카오맵 키 설정 시 동네명 표시';
+					</c:otherwise>
+				</c:choose>
+			}, function () { label.textContent = '위치 권한이 거부되어 위치 없이 등록됩니다'; });
+		})();
 	</script>
 </body>
 </html>

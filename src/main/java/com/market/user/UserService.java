@@ -81,6 +81,27 @@ public class UserService {
         }
     }
 
+    /** SNS 로그인. 최초면 자동 가입 후 SessionUser 반환. */
+    public SessionUser socialLogin(String provider, String providerId, String nickname) {
+        try {
+            UserDTO user = userDAO.findByProvider(provider, providerId);
+            if (user == null) {
+                user = new UserDTO();
+                user.setNickname(nickname == null || nickname.isBlank() ? provider + "사용자" : nickname);
+                user.setEmail(provider + "_" + providerId + "@social.local"); // 이메일 미제공 대비 placeholder
+                user.setPassword(org.mindrot.jbcrypt.BCrypt.hashpw(
+                        java.util.UUID.randomUUID().toString(), org.mindrot.jbcrypt.BCrypt.gensalt())); // 폼 로그인 차단용 랜덤
+                user.setRegion("서울");
+                userDAO.joinSocial(user, provider, providerId);
+                user = userDAO.findByProvider(provider, providerId);
+                log.info("SNS 자동 가입: provider={}, nickname={}", provider, user.getNickname());
+            }
+            return SessionUser.from(user);
+        } catch (SQLException e) {
+            throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
+        }
+    }
+
     /** 회원 탈퇴. 매물·찜 등은 FK CASCADE로 함께 삭제된다. */
     public void deleteAccount(long userId) {
         try {

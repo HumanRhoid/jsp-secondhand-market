@@ -307,6 +307,7 @@
       <div class="cat-row">
         <a class="cat-chip ${empty selectedCategory ? 'active' : ''}"
            href="${pageContext.request.contextPath}/product/?${empty q ? '' : 'q='.concat(q)}">전체</a>
+        <a class="cat-chip ${nearby ? 'active' : ''}" href="#" onclick="goNearby(); return false;">📍 내 주변</a>
         <c:forEach var="cat" items="${categories}">
           <a class="cat-chip ${selectedCategory == cat.id ? 'active' : ''}"
              href="${pageContext.request.contextPath}/product/?category=${cat.id}${empty q ? '' : '&q='.concat(q)}"><c:out value="${cat.name}"/></a>
@@ -346,6 +347,9 @@
           <div class="card-text">
             <div class="card-title"><c:out value="${p.title}"/></div>
             <div class="card-price"><fmt:formatNumber value="${p.price}" />원</div>
+            <c:if test="${nearby && not empty p.distanceKm}">
+              <div class="card-status" style="color:#ff6f0f;">📍 <fmt:formatNumber value="${p.distanceKm}" maxFractionDigits="1"/>km</div>
+            </c:if>
             <div class="card-desc"><c:out value="${p.description}"/></div>
             <c:if test="${p.status ne '판매중'}">
               <div class="card-status"><c:out value="${p.status}"/></div>
@@ -364,5 +368,18 @@
     </a>
 
   </div>
+
+  <script>
+    // "내 주변": 브라우저 위치 → 거리순 정렬 조회
+    function goNearby() {
+      if (!navigator.geolocation) { alert('이 브라우저는 위치를 지원하지 않습니다.'); return; }
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        var params = new URLSearchParams(location.search);
+        params.set('lat', pos.coords.latitude);
+        params.set('lng', pos.coords.longitude);
+        location.href = '${pageContext.request.contextPath}/product/?' + params.toString();
+      }, function () { alert('위치 권한이 필요합니다.'); });
+    }
+  </script>
 </body>
 </html>

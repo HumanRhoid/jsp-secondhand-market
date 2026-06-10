@@ -23,10 +23,10 @@ public class ProductService {
     private final ProductDAO productDAO = new ProductDAO();
     private final CategoryDAO categoryDAO = new CategoryDAO();
 
-    /** 상품 목록 (최신순). keyword(제목 검색)·categoryId(분류) 선택 필터. */
-    public List<ProductDTO> getProducts(String keyword, Long categoryId) {
+    /** 상품 목록. keyword(검색)·categoryId(분류)·lat/lng(내 좌표 → 거리순 정렬) 선택 필터. */
+    public List<ProductDTO> getProducts(String keyword, Long categoryId, Double lat, Double lng) {
         try {
-            return productDAO.findAll(keyword, categoryId);
+            return productDAO.findAll(keyword, categoryId, lat, lng);
         } catch (SQLException e) {
             throw new CustomException(GlobalErrorCode.DATABASE_ERROR, e);
         }

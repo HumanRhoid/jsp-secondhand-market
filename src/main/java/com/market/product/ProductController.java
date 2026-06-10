@@ -72,7 +72,10 @@ public class ProductController extends HttpServlet {
         if (cat != null && !cat.isBlank()) {
             categoryId = parseLong(cat);
         }
-        req.setAttribute("products", productService.getProducts(keyword, categoryId));
+        Double lat = parseDouble(req.getParameter("lat")); // "내 주변" 조회 좌표
+        Double lng = parseDouble(req.getParameter("lng"));
+        req.setAttribute("nearby", lat != null && lng != null);
+        req.setAttribute("products", productService.getProducts(keyword, categoryId, lat, lng));
         req.setAttribute("categories", productService.getCategories());
         req.setAttribute("popular", productService.getPopularProducts(4));
         req.setAttribute("q", keyword);                 // 검색어 유지
@@ -80,10 +83,11 @@ public class ProductController extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/views/product/main.jsp").forward(req, resp);
     }
 
-    // 등록 폼 (카테고리 목록 전달)
+    // 등록 폼 (카테고리 목록 + 카카오맵 JS 키 전달)
     private void formPage(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setAttribute("categories", productService.getCategories());
+        req.setAttribute("kakaoJsKey", AppConfig.get("kakao.js.key"));
         req.getRequestDispatcher("/WEB-INF/views/product/form.jsp").forward(req, resp);
     }
 
@@ -92,6 +96,7 @@ public class ProductController extends HttpServlet {
         ProductDTO product = productService.getProductDetail(parseLong(req.getParameter("id")));
         req.setAttribute("product", product);
         req.setAttribute("seller", userService.findById(product.getUserId()));
+        req.setAttribute("impCode", AppConfig.get("portone.imp.code")); // 포트원 결제창 호출용
         req.getRequestDispatcher("/WEB-INF/views/product/detail.jsp").forward(req, resp);
     }
 
@@ -120,6 +125,8 @@ public class ProductController extends HttpServlet {
         product.setDescription(req.getParameter("description"));
         product.setPrice((int) parseLong(req.getParameter("price")));
         product.setCategoryId(parseLong(req.getParameter("category"))); // 0이면 미분류
+        product.setLatitude(parseDouble(req.getParameter("lat")));   // 등록 위치(카카오맵/Geolocation)
+        product.setLongitude(parseDouble(req.getParameter("lng")));
         List<String> photoPaths = savePhotos(req); // 업로드 사진들 저장 후 경로(/images/...) 목록, 없으면 빈 목록
         try {
             productService.write(loginUser.getId(), product, photoPaths);
@@ -194,6 +201,14 @@ public class ProductController extends HttpServlet {
             return Long.parseLong(value);
         } catch (Exception e) {
             return 0;
+        }
+    }
+
+    private Double parseDouble(String value) {
+        try {
+            return value == null || value.isBlank() ? null : Double.valueOf(value);
+        } catch (Exception e) {
+            return null;
         }
     }
 }
